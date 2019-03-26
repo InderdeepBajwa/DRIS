@@ -1,6 +1,6 @@
-# Dris
+# DRIS Introduction
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.6.
+DRIS is an Angularjs + MongoDB powered highly powerful Sankey Visualization application.
 
 ## Development server
 
