@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+// Importing master variables
+@import "./masterVariables.scss";
 
 body, html {
     height: 100%;
@@ -8,6 +10,12 @@ body, html {
 body {
     font-family: 'Montserrat';
     font-size: 20px;
+    background-image: url($backgroundImg);
+    background-repeat: no-repeat;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 a {
@@ -22,7 +30,7 @@ a {
     grid-template-columns: 30% auto;
 
     a {
-        color: #86F6A7;
+        color: $masterColor;
     }
 }
 
