@@ -7,6 +7,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { NavComponent } from './partials/nav/nav.component';
 import { AboutComponent } from './pages/about/about.component';
 import { ContactComponent } from './pages/contact/contact.component';
+import { VisualizeComponent } from './core/visualize/visualize.component';
 
 // Authentication service
 import { AuthServService } from './core/auth/auth-serv.service';
@@ -19,6 +20,7 @@ import { LoginComponent } from './core/auth/login/login.component';
     NavComponent,
     AboutComponent,
     ContactComponent,
+    VisualizeComponent,
     LoginComponent
   ],
   imports: [
