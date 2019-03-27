@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthServService } from 'src/app/core/auth/auth-serv.service';
 
 @Component({
   selector: 'app-nav',
@@ -9,7 +10,7 @@ export class NavComponent implements OnInit {
 
   appTitle: string = "DRIS";
 
-  constructor() { }
+  constructor(public auth: AuthServService) { }
 
   ngOnInit() {
     

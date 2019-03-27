@@ -9,6 +9,10 @@ import { AboutComponent } from './pages/about/about.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { VisualizeComponent } from './core/visualize/visualize.component';
 
+// Authentication service
+import { AuthServService } from './core/auth/auth-serv.service';
+import { LoginComponent } from './core/auth/login/login.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,13 +20,14 @@ import { VisualizeComponent } from './core/visualize/visualize.component';
     NavComponent,
     AboutComponent,
     ContactComponent,
-    VisualizeComponent
+    VisualizeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [AuthServService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

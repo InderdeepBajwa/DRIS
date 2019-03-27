@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthServService } from './core/auth/auth-serv.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'dris';
+
+  constructor(public auth: AuthServService) {
+    auth.handleAuthentication();
+  }
+
+  ngOnInit() {
+    if (this.auth.isAuthenticated()) {
+      this.auth.renewTokens();
+    }
+  }
 }
