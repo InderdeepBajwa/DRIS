@@ -12,7 +12,7 @@ export class AuthServService {
   private _expiresAt: number;
 
   auth0 = new auth0.WebAuth({
-    clientID: 'rsRf9EBmeGfI6cQR7Q4D1xKAbtbp3Prn',
+    clientID: '##',
     domain: 'dris.auth0.com',
     responseType: 'token id_token',
     redirectUri: 'https://sankey.desktopluxury.com/',
