@@ -1,0 +1,61 @@
+
+// Importing global variables
+@import "../../../../masterVariables.scss";
+
+
+#form {
+    textarea {
+        font-size: 16px;
+    }
+
+    textarea, button {
+        margin: auto;
+        width: 100%;
+    }
+    
+    // Designing the button
+    button{
+        background:$masterColor;
+        color:#fff;
+        border:none;
+        position:relative;
+        height:50px;
+        font-size:1.3em;
+        padding:0 2em;
+        margin-top: 20px;
+        cursor:pointer;
+        transition:800ms ease all;
+        outline:none;
+
+        &:hover{
+            background:rgba(255, 245, 245, 0.8);;
+            color:$masterColor;
+        }
+        &:before,&:after{
+            content:'';
+            position:absolute;
+            top:0;
+            right:0;
+            height:2px;
+            width:0;
+            background: $masterColor;
+            transition:400ms ease all;
+        }
+        &:after{
+            right:inherit;
+            top:inherit;
+            left:0;
+            bottom:0;
+        }
+        &:hover:before,&:hover:after{
+            width:100%;
+            transition:800ms ease all;
+        }
+    }
+}
+  
+
+#inputChart {
+    margin: auto;
+    width: 90%;
+}

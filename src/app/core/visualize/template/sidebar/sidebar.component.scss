@@ -1,0 +1,23 @@
+
+// Importing global variables
+@import "../../../../../masterVariables.scss";
+
+ul {
+    background-color: black;
+    color: white;
+    margin: 0;
+    padding: 0;
+    height: 91.7vh;
+    li {
+        padding-top: 2em;
+        padding-left: 0.4em;
+
+        a {
+            text-decoration: none;
+            color: white;
+            &:hover {
+                color: $masterColor;
+            }
+        }
+    }
+}

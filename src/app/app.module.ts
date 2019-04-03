@@ -12,6 +12,9 @@ import { VisualizeComponent } from './core/visualize/visualize.component';
 // Authentication service
 import { AuthServService } from './core/auth/auth-serv.service';
 import { LoginComponent } from './core/auth/login/login.component';
+import { TemplateComponent } from './core/visualize/template/template.component';
+import { SidebarComponent } from './core/visualize/template/sidebar/sidebar.component';
+import { ChartComponent } from './core/visualize/chart/chart.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import { LoginComponent } from './core/auth/login/login.component';
     AboutComponent,
     ContactComponent,
     VisualizeComponent,
-    LoginComponent
+    LoginComponent,
+    TemplateComponent,
+    SidebarComponent,
+    ChartComponent
   ],
   imports: [
     BrowserModule,
