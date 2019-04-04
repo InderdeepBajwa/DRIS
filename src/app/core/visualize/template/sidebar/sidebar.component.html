@@ -1,8 +1,10 @@
-<ul>
-  <li>ProfilePic</li>
-  <li *ngIf="profile">Welcome, {{ profile?.nickname }}!</li>
-  <li *ngIf="!profile">Welcome Visualizer!</li>
-  <li><a href="">My Visualizations</a></li>
-  <li><a href="">Instructions</a></li>
-  <li><a href="">Settings</a></li>
-</ul>
+
+<span style="font-size:30px;cursor:pointer" (click)="openNav()">&#9776;</span>
+
+<aside id="sideNav">
+  <a *ngIf="profile">Welcome, {{ profile.nickname }}!</a>
+  <a *ngIf="!profile">Welcome, visualizer!</a>
+  <a href="">My Visualizations</a>
+  <a href="">Instructions</a>
+  <a href="">Settings</a>
+</aside>

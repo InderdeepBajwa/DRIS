@@ -8,7 +8,7 @@ import { AuthServService } from 'src/app/core/auth/auth-serv.service';
 })
 export class SidebarComponent implements OnInit {
 
-  // User profile 
+  // User profile
   profile: any;
 
   constructor(public auth: AuthServService) { }
@@ -21,6 +21,14 @@ export class SidebarComponent implements OnInit {
         this.profile = profile;
       });
     }
+  }
+
+  openNav() {
+    document.getElementById('sideNav').style.width = '250px';
+  }
+
+  closeNav() {
+    document.getElementById('sideNav').style.width = '0';
   }
 
 }
