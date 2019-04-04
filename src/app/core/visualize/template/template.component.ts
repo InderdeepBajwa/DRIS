@@ -5,6 +5,7 @@ import * as d3path from 'd3-path';
 import * as d3shape from 'd3-shape';
 import * as d3Sankey from 'd3-sankey';
 import * as d3 from 'd3';
+import { saveSvgAsPng }  from 'save-svg-as-png';
 
 @Component({
   selector: 'app-template',
@@ -18,9 +19,13 @@ export class TemplateComponent implements OnInit {
   // ngOnInit() {
   // }
 
+  SavePng() {
+    saveSvgAsPng(document.getElementById("sankey"), "diagram.png");
+
+  }
+
   width = 975;
   height = 600;
-
   
   data = d3.json("https://gist.githubusercontent.com/mbostock/ca9a0bb7ba204d12974bca90acc507c0/raw/398136b7db83d7d7fd89181b080924eb76041692/energy.json");
   
@@ -176,3 +181,4 @@ interface DAG {
     nodes: SNode[];
     links: SLink[];
 }
+
