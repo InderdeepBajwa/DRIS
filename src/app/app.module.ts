@@ -15,6 +15,7 @@ import { LoginComponent } from './core/auth/login/login.component';
 import { TemplateComponent } from './core/visualize/template/template.component';
 import { SidebarComponent } from './core/visualize/template/sidebar/sidebar.component';
 import { ChartComponent } from './core/visualize/chart/chart.component';
+import { PrevchartComponent } from './core/visualize/template/prevchart/prevchart.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ChartComponent } from './core/visualize/chart/chart.component';
     LoginComponent,
     TemplateComponent,
     SidebarComponent,
-    ChartComponent
+    ChartComponent,
+    PrevchartComponent
   ],
   imports: [
     BrowserModule,
