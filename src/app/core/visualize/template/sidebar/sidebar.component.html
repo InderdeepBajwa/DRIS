@@ -1,10 +1,8 @@
 
-<span style="font-size:30px;cursor:pointer" (click)="openNav()">&#9776;</span>
-
-<aside id="sideNav">
-  <a *ngIf="profile">Welcome, {{ profile.nickname }}!</a>
-  <a *ngIf="!profile">Welcome, visualizer!</a>
-  <a href="">My Visualizations</a>
-  <a href="">Instructions</a>
-  <a href="">Settings</a>
+<aside>
+    <a routerLink="/" title="Home">Hom</a>
+    <a href="#1" title="Previous Visualizations">Prev</a>
+    <a href="#2" title="Settings">Set</a>
+    <a href="#3" title="Instructions">Inf</a>
 </aside>
+

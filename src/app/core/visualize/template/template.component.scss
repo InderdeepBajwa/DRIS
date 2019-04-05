@@ -8,9 +8,8 @@ div {
     display: grid;
     //grid-template-areas:
     //    'app-sidebar app-sidebar app-chart app-chart app-chart';
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(10, 1fr);
     grid-gap: 5px;
-    padding-right: 10px;
 }
 
 app-sidebar {
@@ -22,15 +21,10 @@ app-sidebar {
 }
 
 app-chart {
-    grid-column: 2/4;
+    grid-column-start: 2;
+    grid-column-end: 10;
     grid-row: 1;
 }
 
-#sankey {
-    grid-column: 5;
-    grid-row: 1;
-
-    background-color: rgb(233, 255, 239);
-}
 
 
