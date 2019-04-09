@@ -17,5 +17,16 @@ export class TemplateComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.drawChart();
+  }
+
+  public drawChart() {
+      
+    var data = d3.json("https://gist.githubusercontent.com/mbostock/ca9a0bb7ba204d12974bca90acc507c0/raw/398136b7db83d7d7fd89181b080924eb76041692/energy.json")
+
+    console.log(data);
+
+    
+
   }
 }

@@ -17,6 +17,9 @@ import { SidebarComponent } from './core/visualize/template/sidebar/sidebar.comp
 import { ChartComponent } from './core/visualize/chart/chart.component';
 import { PrevchartComponent } from './core/visualize/template/prevchart/prevchart.component';
 
+// Charting service
+import { GoogleChartsModule } from 'angular-google-charts';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +36,8 @@ import { PrevchartComponent } from './core/visualize/template/prevchart/prevchar
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    GoogleChartsModule
   ],
   providers: [AuthServService],
   bootstrap: [AppComponent]

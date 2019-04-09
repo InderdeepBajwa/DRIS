@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import * as d3 from 'd3';
-import * as d3sankey from 'd3-sankey';
+import { Component, OnInit, Output } from '@angular/core';
+
+import { GoogleChartsModule } from 'angular-google-charts';
 
 @Component({
   selector: 'app-chart',
@@ -13,4 +13,11 @@ export class ChartComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  public getData(data:string) {
+    var data2 = data.split('\n');
+    var data3 = data2.map((value) => value.split(','));
+    // data3 contains sufficient data
+  }
+
 }

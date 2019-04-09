@@ -1,5 +1,6 @@
 
 <section>
-    <textarea contenteditable="true" name="" id="" cols="30" rows="25"></textarea>
-    <button>Visualize Now</button>
+    <textarea #textData contenteditable="true" name="" id="" cols="30" rows="25"></textarea>
+    <button (click)="getData(textData.value)">Visualize Now</button>
+    <button (click)="sendData()">Check Visual</button>
 </section>
