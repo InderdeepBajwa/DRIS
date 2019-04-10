@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
 import * as d3Sankey from 'd3-sankey';
+import { DataDriverService } from '../../data-driver.service';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 
 @Component({
   selector: 'app-prevchart',
@@ -9,39 +11,30 @@ import * as d3Sankey from 'd3-sankey';
 })
 export class PrevchartComponent implements OnInit {
 
-  constructor() { }
+  message:string = "From, To, 1";
+  previousMessage:string = "From, To, 1";
+  
+  constructor(private receivedData: DataDriverService) { }
   
   ngOnInit() {
+    this.receivedData.currentMessage.subscribe(message => this.onChangeMessage(message));
+    
+    // data3 contains sufficient data
   }
 
+  chartData = [
+    ["From", "To", 3],
+    ["From", "Towards", 1]
+  ];
   title = '';
   type = 'Sankey';
-  data = [
-     ["Brazil","Portugal",5],
-     ["Brazil","France",1],
-     ["Brazil","Spain",1],
-     ["Brazil","England",1],
-     ["Canada","Portugal",1],
-     ["Canada","France",5],
-     ["Canada","England",1],
-     ["Mexico","Portugal",1], 
-     ["Mexico","France",1],
-     ["Mexico","Spain",5],
-     ["Mexico","England",1], 
-     ["USA","Portugal",1], 
-     ["USA","France",1],
-     ["USA","Spain",1],
-     ["USA","England",5],
-     ["Portugal","Angola",2], 
-     ["Portugal","Senagal",1],
-     ["Portugal","Morocco",1],
-     ["Portugal","South Africa",3]
-   ];
+  data = this.chartData;
    columnNames = ['From', 'To','Weight'];
    color = ['#a6cee3', '#b2df8a', '#fb9a99', '#fdbf6f', 
         '#cab2d6', '#ffff99', '#1f78b4', '#33a02c'];
   options = {
    height: 250,
+   redrawTrigger: 0,
    sankey: {
      node: {
        colors: this.color
@@ -55,6 +48,24 @@ export class PrevchartComponent implements OnInit {
   width = 270;
   height = 400;
 
+
+  public onChangeMessage(cData: string) {
+    // console.log(this.options.height);
+    this.message = cData;
+    // if(this.message !== this.previousMessage) {
+    //   console.log(this.chartData);
+    //   var data2 = this.message.split('\n');
+    //   this.chartData = data2.map((value) => value.split(','));
+    //   console.log(this.chartData);
+    //   this.data = this.chartData;
+    //   this.options.height = 100;
+    //   console.log(this.options.height);
+    //   this.previousMessage = this.message;
+    // }
+  }
+
+  
+
   // To manage the size of preview (yet to implement)
   public increaseSize() {
     this.width = 400;
@@ -66,11 +77,11 @@ export class PrevchartComponent implements OnInit {
     this.height = 400;
   }
 
-  public getData(data:string) {
-    console.log(data);
+  // public getData(data:string) {
+  //   console.log(data);
 
-    var data2 = data.split('\n');
-    var data3 = data2.map((value) => value.split(','));
-    console.log(data3);
-  }
+  //   var data2 = data.split('\n');
+  //   var data3 = data2.map((value) => value.split(','));
+  //   console.log(data3);
+  // }
 }

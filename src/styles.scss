@@ -39,3 +39,10 @@ section {
     margin: 0 auto;
     padding: 2em;
 }
+
+// Router transition CSS
+router-outlet ~ * {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+  }

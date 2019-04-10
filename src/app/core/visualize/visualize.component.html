@@ -1,9 +1,18 @@
 
 <!--
   This file contains (website-address.tdl/new):
-    1. Visualized Sankeyw
+    1. Visualized Sankey
 -->
 <div>
   <app-sidebar></app-sidebar>
+  <google-chart #chart *ngIf="message != NULL"
+      [title]="title"
+      [type]="type"
+      [data]="data"
+      [columnNames]="columnNames"
+      [options]="options"
+      [width]="width"
+      [height]="height">
+  </google-chart>
 </div>
 

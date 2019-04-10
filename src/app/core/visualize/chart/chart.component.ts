@@ -1,6 +1,6 @@
-import { Component, OnInit, Output } from '@angular/core';
-
-import { GoogleChartsModule } from 'angular-google-charts';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { DataDriverService } from '../data-driver.service';
 
 @Component({
   selector: 'app-chart',
@@ -8,10 +8,22 @@ import { GoogleChartsModule } from 'angular-google-charts';
   styleUrls: ['./chart.component.scss']
 })
 export class ChartComponent implements OnInit {
+  message: string;
 
-  constructor() { }
+  constructor(private data: DataDriverService, private router: Router) { }
 
   ngOnInit() {
+    this.data.currentMessage.subscribe(message => this.message = message);
+  }
+
+  newMessage(chartData: string) {
+    this.data.changeMessage(chartData);
+  }
+
+  visualize(chartData: string) {
+    this.data.changeMessage(chartData);
+    this.router.navigate(['visualize']);
+
   }
 
   public getData(data:string) {

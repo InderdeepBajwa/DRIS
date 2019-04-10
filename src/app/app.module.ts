@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -36,8 +37,9 @@ import { GoogleChartsModule } from 'angular-google-charts';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
-    GoogleChartsModule
+    GoogleChartsModule,
   ],
   providers: [AuthServService],
   bootstrap: [AppComponent]
