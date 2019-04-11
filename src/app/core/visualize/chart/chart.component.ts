@@ -22,7 +22,7 @@ export class ChartComponent implements OnInit {
 
   visualize(chartData: string) {
     this.data.changeMessage(chartData);
-    this.router.navigate(['visualize']);
+    this.router.navigateByUrl('visualize');
 
   }
 
