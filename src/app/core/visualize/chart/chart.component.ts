@@ -69,13 +69,50 @@ export class ChartComponent implements OnInit {
         .attr("font-family", "sans-serif")
         .attr("font-size", 10)
         .selectAll("g");
-        
-    d3.json("//cdn.rawgit.com/q-m/d3.chart.sankey/master/example/data/product.json")
-        .then(function(data: DAG) {
-      // @ts-ignore
-      sankey(data);
+      
+
+    var graph = { "nodes" : [], "links" : [] };
+    
+    var cData = "";
+
+    var sankeyData = d3.csvParse(`source,target,value
+red,yellow,20
+red,blue,30
+blue,green,5`);
+    console.log(sankeyData);
+          
+    sankeyData.forEach(d => {
+      graph.nodes.push({ "name": d.source});
+      graph.nodes.push({ "name": d.target});
+      graph.links.push({ "source" : d.source,
+                        "target" : d.target,
+                        "value": +d.value });
+
+    graph.nodes = d3.map(graph.nodes, function(d) {return d.name;}).keys();
+    console.log("CSV DATA HERE");
+    console.log(graph);
+
+    graph.links.forEach(function (d, i) {
+      graph.links[i].source = graph.nodes.indexOf(graph.links[i].source);
+      graph.links[i].target = graph.nodes.indexOf(graph.links[i].target);
+    });
+
+    graph.nodes.forEach(function (d, i) {
+      graph.nodes[i] = { "name": d };
+    });
+
+    sankey(graph);
+    // });
+
+
+          
+    // d3.json("//cdn.rawgit.com/q-m/d3.chart.sankey/master/example/data/product.json")
+    //     .then(function(data: DAG) {
+    //       console.log(data);
+    //   // @ts-ignore
+    //   sankey(data);
       link = link
-          .data(data.links)
+          .data(graph.links)
           .enter().append("path")
           .attr("d", d3sankey.sankeyLinkHorizontal())
           .attr("stroke-width", function (d: any) { return Math.max(1, d.width); });
@@ -84,7 +121,7 @@ export class ChartComponent implements OnInit {
           .text(function (d: any) { return d.source.name + " → " + d.target.name + "\n" + format(d.value); });
 
       node = node
-          .data(data.nodes)
+          .data(graph.nodes)
           .enter().append("g");
 
       node.append("rect")
