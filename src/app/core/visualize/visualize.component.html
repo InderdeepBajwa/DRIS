@@ -5,16 +5,7 @@
 -->
 <div>
   <app-sidebar></app-sidebar>
-  <google-chart #chart
-      [title]="title"
-      [type]="type"
-      [data]="data"
-      [columnNames]="columnNames"
-      [options]="options"
-      [width]="width"
-      [height]="height">
-  </google-chart>
-  
-  <button style="height: 20px">Save Chart</button>
+  <svg #downloadSankey id="sankey" width="800" height="600" style="background-color: white;"></svg>
+  <button id="saveButton" (click)="saveSvg(downloadSankey,'test.jpg')" style="height: 20px">Save Chart</button>
 </div>
 
