@@ -41,10 +41,7 @@ export class VisualizeComponent implements OnInit {
         '#ffb2a8',
         '#89ef56'
       ]);
-    
-    
-
-    
+        
 
     // Selecting Sankey element from HTML
     var svg = d3.select("#sankey"),
@@ -75,7 +72,7 @@ export class VisualizeComponent implements OnInit {
     var node = svg.append("g")
         .attr("class", "nodes")
         .attr("font-family", "sans-serif")
-        .attr("font-size", 10)
+        .attr("font-size", 12)
         .selectAll("g");
     
     // Initializing graph (data container)

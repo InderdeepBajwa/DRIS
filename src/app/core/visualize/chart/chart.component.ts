@@ -49,17 +49,18 @@ export class ChartComponent implements OnInit {
     if (this.message == "" || this.message == null) {
       return;
     }
-
+    
     // Color scheme
     const colors = d3.scaleOrdinal()
-        .domain([
-          'red',
-          'green'
-        ])
-        .range([
-          '#ffb2a8',
-          '#89ef56'
-        ]);
+      .domain([
+        'red',
+        'green'
+      ])
+      .range([
+        '#ffb2a8',
+        '#89ef56'
+      ]);
+        
 
     // Selecting Sankey element from HTML
     var svg = d3.select("#sankey"),
@@ -71,7 +72,7 @@ export class ChartComponent implements OnInit {
 
     // Formatting numbers in Sankey
     var formatNumber = d3.format(",.0f"),
-        format = function (d: any) { return formatNumber(d) }, //+ " Units"; }, Optional units
+        format = function (d: any) { return formatNumber(d) }, // (Optional) to add functionality of units: + " TWh"; },
         color = d3.scaleOrdinal(d3.schemeCategory10);
 
     // Initializing Sankey variable
@@ -83,23 +84,15 @@ export class ChartComponent implements OnInit {
     var link = svg.append("g")
         .attr("class", "links")
         .attr("fill", "none")
-        .attr("stroke", "none")
-        .attr("stroke-opacity", 1)
-        .selectAll("path")
-        .on('mouseover', function() {
-          d3.select(this).style('stroke-opacity', 0.5);
-        })
-        .on('mouseout', function() {
-          d3.select(this).style('stroke-opacity', 0.2);
-        });
-  
+        .attr("stroke", "#000")
+        .attr("stroke-opacity", 0.2)
+        .selectAll("path");
 
     var node = svg.append("g")
         .attr("class", "nodes")
         .attr("font-family", "sans-serif")
-        .attr("font-size", 10)
+        .attr("font-size", 12)
         .selectAll("g");
-    
     
     // Initializing graph (data container)
     var graph = { "nodes" : [], "links" : [] };
@@ -124,12 +117,12 @@ export class ChartComponent implements OnInit {
     graph.nodes.forEach(function (d, i) {
       graph.nodes[i] = { "name": d };
     });
+
+    // append a defs (for definition) element to your SVG
+    const defs = svg.append('defs');
     
     sankey(graph);
 
-    // Color definitions
-    const defs = svg.append('defs');
-          
     link = link
         .data(graph.links)
         .enter().append("path")
@@ -148,63 +141,72 @@ export class ChartComponent implements OnInit {
         .attr("y", function (d: any) { return d.y0; })
         .attr("height", function (d: any) { return d.y1 - d.y0; })
         .attr("width", function (d: any) { return d.x1 - d.x0; })
-        .style("fill", function (d: any) { 
-          if (colors.domain().indexOf(d.name) > -1) {
-            return d.color = colors(d.name);
+        // @ts-ignore
+        .attr("fill", function (d: any) { 
+          if(colors.domain().indexOf(d.name) > -1){
+            return d.color = colors(d.name);  
           } else {
             return d.color = getRandomColor();
           }
-         });
+         })
+        .attr("stroke", "#EEE")
+        .attr('stroke-opcaity', 0.2);
 
     node.append("text")
         .attr("x", function (d: any) { return d.x0 - 6; })
         .attr("y", function (d: any) { return (d.y1 + d.y0) / 2; })
         .attr("dy", "0.35em")
-        .style('fill', 'white')
-        .style('font-weight', 'bold')
-        .style('font-size', '14px')
         .attr("text-anchor", "end")
         .text(function (d: any) { return d.name + " [" + format(d.value) + ']'; })
         .filter(function (d: any) { return d.x0 < width / 2; })
         .attr("x", function (d: any) { return d.x1 + 6; })
         .attr("text-anchor", "start");
 
-    link.style('stroke', (d,i) => {
-      
-      // Unique gradient ID
-      const gradientID = `gradient${i}`;
-
-      const startColor = d.source.color;
-      const stopColor = d.target.color;
-
-      const linearGradient = defs.append('linearGradient')
-            .attr('id', gradientID);
-      
-      linearGradient.selectAll('stop').data([
-          {offset: '10%', color: startColor },      
-          {offset: '90%', color: stopColor } 
-      ])
-      .enter().append('stop')
-      .attr('offset', d => {
-        return d.offset; 
-      })   
-      .attr('stop-color', d => {
-        return d.color;
-      });
-      
-      return `url(#${gradientID})`;
-
-    });
-
     node.append("title")
         .text(function (d: any) { return d.name + "\n" + format(d.value); });
-    
-    
+
+    // add gradient to links
+    link.style('stroke', (d, i) => {
+      console.log('d from gradient stroke func', d);
+
+      // make unique gradient ids  
+      const gradientID = `gradient${i}`;
+
+      // @ts-ignore
+      const startColor = d.source.color;
+      // @ts-ignore
+      const stopColor = d.target.color;
+
+      console.log('startColor', startColor);
+      console.log('stopColor', stopColor);
+
+      const linearGradient = defs.append('linearGradient')
+          .attr('id', gradientID);
+
+      linearGradient.selectAll('stop') 
+        .data([                             
+            {offset: '10%', color: startColor },      
+            {offset: '90%', color: stopColor }    
+          ])                  
+        .enter().append('stop')
+        .attr('offset', d => {
+          console.log('d.offset', d.offset);
+          return d.offset; 
+        })   
+        .attr('stop-color', d => {
+          console.log('d.color', d.color);
+          return d.color;
+        });
+
+      return `url(#${gradientID})`;
+    });
+
+
     // Utility functions
     
     // Method to generate random color
     function getRandomColor() {
-      var letters = '123456789ABCDEF';
+      var letters = '0123456789ABCDEF';
       var color = '#';
       for (var i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];
@@ -212,6 +214,5 @@ export class ChartComponent implements OnInit {
       return color;
     }
   }
-
 }
 

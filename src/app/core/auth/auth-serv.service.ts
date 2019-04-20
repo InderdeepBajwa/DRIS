@@ -86,7 +86,7 @@ export class AuthServService {
 
   public getProfile(cb): void {
     if (!this._accessToken) {
-      throw new Error('Access Token doesn\' exist');
+      throw new Error('Access Token doesn\'t exist');
     }
 
     const self = this;
