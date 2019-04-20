@@ -51,7 +51,7 @@ export class ChartComponent implements OnInit {
     }
     
     // Color scheme
-    const colors = d3.scaleOrdinal()
+    const color = d3.scaleOrdinal()
       .domain([
         'red',
         'green'
@@ -64,16 +64,16 @@ export class ChartComponent implements OnInit {
 
     // Selecting Sankey element from HTML
     var svg = d3.select("#sankey"),
-        width = +svg.attr("width"),
-        height = +svg.attr("height");
+        width = +svg.attr("width") - 10,
+        height = +svg.attr("height") - 10;
 
     // Clearing previous graph
     svg.selectAll("*").remove();
 
     // Formatting numbers in Sankey
     var formatNumber = d3.format(",.0f"),
-        format = function (d: any) { return formatNumber(d) }, // (Optional) to add functionality of units: + " TWh"; },
-        color = d3.scaleOrdinal(d3.schemeCategory10);
+        format = function (d: any) { return formatNumber(d) }; // (Optional) to add functionality of units: + " TWh"; },
+        
 
     // Initializing Sankey variable
     var sankey = d3sankey.sankey()
@@ -84,7 +84,6 @@ export class ChartComponent implements OnInit {
     var link = svg.append("g")
         .attr("class", "links")
         .attr("fill", "none")
-        .attr("stroke", "#000")
         .attr("stroke-opacity", 0.2)
         .selectAll("path");
 
@@ -143,14 +142,12 @@ export class ChartComponent implements OnInit {
         .attr("width", function (d: any) { return d.x1 - d.x0; })
         // @ts-ignore
         .attr("fill", function (d: any) { 
-          if(colors.domain().indexOf(d.name) > -1){
-            return d.color = colors(d.name);  
+          if(color.domain().indexOf(d.name) > -1){
+            return d.color = color(d.name);  
           } else {
             return d.color = getRandomColor();
           }
-         })
-        .attr("stroke", "#EEE")
-        .attr('stroke-opcaity', 0.2);
+         });
 
     node.append("text")
         .attr("x", function (d: any) { return d.x0 - 6; })
@@ -167,8 +164,6 @@ export class ChartComponent implements OnInit {
 
     // add gradient to links
     link.style('stroke', (d, i) => {
-      console.log('d from gradient stroke func', d);
-
       // make unique gradient ids  
       const gradientID = `gradient${i}`;
 
@@ -176,9 +171,6 @@ export class ChartComponent implements OnInit {
       const startColor = d.source.color;
       // @ts-ignore
       const stopColor = d.target.color;
-
-      console.log('startColor', startColor);
-      console.log('stopColor', stopColor);
 
       const linearGradient = defs.append('linearGradient')
           .attr('id', gradientID);
@@ -190,11 +182,9 @@ export class ChartComponent implements OnInit {
           ])                  
         .enter().append('stop')
         .attr('offset', d => {
-          console.log('d.offset', d.offset);
           return d.offset; 
         })   
         .attr('stop-color', d => {
-          console.log('d.color', d.color);
           return d.color;
         });
 
