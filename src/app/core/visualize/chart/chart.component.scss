@@ -7,9 +7,16 @@ section {
     margin: 0;
 }
 
-textarea {
+#chartInput {
     width: 100%;
     min-height: 100%;
     resize: none;
     margin-top: 20em;
+}
+
+#colorSelect {
+    width: 30%;
+    height: 20vh;
+    resize: none;
+    float: right;
 }

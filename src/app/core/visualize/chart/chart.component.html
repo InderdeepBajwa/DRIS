@@ -1,6 +1,7 @@
 
 <section>
-    <textarea #textData (keyup.enter)="keyPressed($event)" spellcheck="false" contenteditable="true" name="" id="" cols="30" rows="25"></textarea>
+    <textarea #textData (keyup.enter)="keyPressed($event)" spellcheck="false" contenteditable="true" name="" id="chartInput" cols="30" rows="25"></textarea>
+    <textarea #uniqueInputs spellcheck="false" contenteditable="false" name="" id="colorSelect" cols="30" rows="2" value="{{uniqueData}}"></textarea>
     <button (click)="visualize(textData.value)">Visualize Now</button>
     <button (click)="newMessage(textData.value)">Check Visual</button>
 </section>

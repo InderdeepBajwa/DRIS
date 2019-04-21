@@ -12,6 +12,15 @@ import * as d3sankey from 'd3-sankey';
 })
 export class ChartComponent implements OnInit {
   message: string;
+  uniqueData: string = "";
+
+  // Color scheme
+  color =
+    d3.scaleOrdinal()
+     .domain([
+    ])
+      .range([
+  ]);
 
   constructor(private data: DataDriverService, private router: Router) { }
 
@@ -64,8 +73,8 @@ export class ChartComponent implements OnInit {
 
     // Selecting Sankey element from HTML
     var svg = d3.select("#sankey"),
-        width = +svg.attr("width") - 10,
-        height = +svg.attr("height") - 10;
+        width = +svg.attr("width"),
+        height = +svg.attr("height");
 
     // Clearing previous graph
     svg.selectAll("*").remove();
@@ -97,14 +106,16 @@ export class ChartComponent implements OnInit {
     var graph = { "nodes" : [], "links" : [] };
 
     var sankeyData = d3.csvParse(this.message);
-
     sankeyData.forEach(d => {
+      this.uniqueData += d.source + '\n';
       graph.nodes.push({ "name": d.source});
       graph.nodes.push({ "name": d.target});
       graph.links.push({ "source" : d.source,
                         "target" : d.target,
                         "value": +d.value });
     });
+
+    
 
     graph.nodes = d3.map(graph.nodes, function(d) {return d.name;}).keys();
 
@@ -172,9 +183,10 @@ export class ChartComponent implements OnInit {
       // @ts-ignore
       const stopColor = d.target.color;
 
-      const linearGradient = defs.append('linearGradient')
+      var linearGradient = defs.append('linearGradient')
+          .attr('gradientUnits', 'userSpaceOnUse')
           .attr('id', gradientID);
-
+        
       linearGradient.selectAll('stop') 
         .data([                             
             {offset: '10%', color: startColor },      
@@ -183,7 +195,7 @@ export class ChartComponent implements OnInit {
         .enter().append('stop')
         .attr('offset', d => {
           return d.offset; 
-        })   
+        })
         .attr('stop-color', d => {
           return d.color;
         });
@@ -192,8 +204,20 @@ export class ChartComponent implements OnInit {
     });
 
 
-    // Utility functions
+    let words = this.uniqueData.split('\n');
     
+
+
+    this.color = color;
+
+    // Utility functions
+
+    // Color filter
+
+    function onlyUnique(value, index, self) { 
+      return self.indexOf(value) === index;
+    }
+
     // Method to generate random color
     function getRandomColor() {
       var letters = '0123456789ABCDEF';

@@ -32,7 +32,7 @@ export class VisualizeComponent implements OnInit {
     }
     
     // Color scheme
-    const colors = d3.scaleOrdinal()
+    const color = d3.scaleOrdinal()
       .domain([
         'red',
         'green'
@@ -53,8 +53,8 @@ export class VisualizeComponent implements OnInit {
 
     // Formatting numbers in Sankey
     var formatNumber = d3.format(",.0f"),
-        format = function (d: any) { return formatNumber(d) }, // (Optional) to add functionality of units: + " TWh"; },
-        color = d3.scaleOrdinal(d3.schemeCategory10);
+        format = function (d: any) { return formatNumber(d) }; // (Optional) to add functionality of units: + " TWh"; },
+        
 
     // Initializing Sankey variable
     var sankey = d3sankey.sankey()
@@ -65,7 +65,6 @@ export class VisualizeComponent implements OnInit {
     var link = svg.append("g")
         .attr("class", "links")
         .attr("fill", "none")
-        .attr("stroke", "#000")
         .attr("stroke-opacity", 0.2)
         .selectAll("path");
 
@@ -98,14 +97,12 @@ export class VisualizeComponent implements OnInit {
     graph.nodes.forEach(function (d, i) {
       graph.nodes[i] = { "name": d };
     });
+
+    // append a defs (for definition) element to your SVG
+    const defs = svg.append('defs');
     
     sankey(graph);
-          
-    // d3.json("//cdn.rawgit.com/q-m/d3.chart.sankey/master/example/data/product.json")
-    //     .then(function(data: DAG) {
-    //       console.log(data);
-    //   // @ts-ignore
-    //   sankey(data);
+
     link = link
         .data(graph.links)
         .enter().append("path")
@@ -117,15 +114,21 @@ export class VisualizeComponent implements OnInit {
 
     node = node
         .data(graph.nodes)
-        .enter().append("g")
+        .enter().append("g");
 
     node.append("rect")
         .attr("x", function (d: any) { return d.x0; })
         .attr("y", function (d: any) { return d.y0; })
         .attr("height", function (d: any) { return d.y1 - d.y0; })
         .attr("width", function (d: any) { return d.x1 - d.x0; })
-        .attr("fill", function (d: any) { return color(d.name.replace(/ .*/, "")); })
-        .attr("stroke", "#000");
+        // @ts-ignore
+        .attr("fill", function (d: any) { 
+          if(color.domain().indexOf(d.name) > -1){
+            return d.color = color(d.name);  
+          } else {
+            return d.color = getRandomColor();
+          }
+         });
 
     node.append("text")
         .attr("x", function (d: any) { return d.x0 - 6; })
@@ -139,5 +142,47 @@ export class VisualizeComponent implements OnInit {
 
     node.append("title")
         .text(function (d: any) { return d.name + "\n" + format(d.value); });
+
+    // add gradient to links
+    link.style('stroke', (d, i) => {
+      // make unique gradient ids  
+      const gradientID = `gradient${i}`;
+
+      // @ts-ignore
+      const startColor = d.source.color;
+      // @ts-ignore
+      const stopColor = d.target.color;
+
+      var linearGradient = defs.append('linearGradient')
+          .attr('gradientUnits', 'userSpaceOnUse')
+          .attr('id', gradientID);
+        
+      linearGradient.selectAll('stop') 
+        .data([                             
+            {offset: '10%', color: startColor },      
+            {offset: '90%', color: stopColor }    
+          ])                  
+        .enter().append('stop')
+        .attr('offset', d => {
+          return d.offset; 
+        })
+        .attr('stop-color', d => {
+          return d.color;
+        });
+
+      return `url(#${gradientID})`;
+    });
+
+    // Utility functions
+    
+    // Method to generate random color
+    function getRandomColor() {
+      var letters = '0123456789ABCDEF';
+      var color = '#';
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
   }
 }
