@@ -5,6 +5,15 @@ import * as d3 from 'd3';
 import * as d3sankey from 'd3-sankey';
 import saveSvgAsPng from 'save-svg-as-png';
 
+// Authentication and Database handling
+import { ApiService } from './../../core/consume/api.service';
+import { Subscription, Observable } from 'rxjs';
+import { VisualizationModel } from './../../core/dbase/server/visualization.model';
+import { AuthServService } from './../auth/auth-serv.service';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http'
+import { catchError } from 'rxjs/operators';
+
+
 @Component({
   selector: 'app-visualize',
   templateUrl: './visualize.component.html',
@@ -26,8 +35,13 @@ export class VisualizeComponent implements OnInit {
   width = 1200;
   height = 600;
 
-  constructor(private receivedData: DataDriverService, private router: Router) {
-  }
+  constructor(
+    private receivedData: DataDriverService,
+    private router: Router,
+    private api: ApiService,
+    private auth: AuthServService,
+    private http: HttpClient
+  ) {}
 
   ngOnInit() {
     this.receivedData.currentMessage.subscribe(message => this.message = message);
@@ -42,6 +56,8 @@ export class VisualizeComponent implements OnInit {
       return;
     }
     this.drawChart();
+
+    this._uploadVisualization();
   }
 
   // Save chart
@@ -222,4 +238,46 @@ export class VisualizeComponent implements OnInit {
       return color;
     }
   }
+
+
+  // Saving functions
+  getImgUrl(): string {
+    return "https://desktopluxury.com/"
+  }
+
+  // Save URI of Sankey image to cloud
+  getUri(): string {
+    let imgUri: any;
+    saveSvgAsPng.svgAsDataUri(d3.select('svg').node(), {}, function(uri) {
+      imgUri = uri;
+    });
+    return "TestURI";
+  }
+
+
+  // Database and Auth handling here
+
+  VisualizationListSub: Subscription;
+  visualizationsList: VisualizationModel[];
+  error: boolean;
+
+  
+
+  // Submitting data to database
+  private _uploadVisualization() {
+    console.log("request made");
+    var visualData = new VisualizationModel(
+      'Test',
+      this.getUri(),
+      this.getImgUrl(),
+      new Date(),
+      'google-oauth2|111260364297332924329'
+    );
+    console.log(visualData);
+
+    this.api.postVisual$(visualData);
+    
+  }
+
+
 }

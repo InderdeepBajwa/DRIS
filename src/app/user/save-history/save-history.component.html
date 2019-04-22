@@ -1,0 +1,16 @@
+<div>
+  <app-sidebar></app-sidebar>
+
+  <div>
+
+    <ul>
+      <li class="item" *ngFor="let item of visualizationsList">
+        <h4>ID: {{item._id}}</h4>
+        <img src="{{item.imgUrl}}" alt="">
+        <p>{{item.createDate}}</p>
+        <a href="{{item.uri}}"><button>Download</button></a>
+      </li>
+    </ul>
+
+  </div>
+</div>

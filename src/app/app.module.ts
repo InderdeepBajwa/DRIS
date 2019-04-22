@@ -20,6 +20,11 @@ import { PrevchartComponent } from './core/visualize/template/prevchart/prevchar
 
 // Charting service
 import { GoogleChartsModule } from 'angular-google-charts';
+import { ProfileComponent } from './core/auth/profile/profile.component';
+import { CallbackComponent } from './pages/callback/callback.component';
+import { SaveHistoryComponent } from './user/save-history/save-history.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ApiService } from './core/consume/api.service';
 
 @NgModule({
   declarations: [
@@ -33,15 +38,22 @@ import { GoogleChartsModule } from 'angular-google-charts';
     TemplateComponent,
     SidebarComponent,
     ChartComponent,
-    PrevchartComponent
+    PrevchartComponent,
+    ProfileComponent,
+    CallbackComponent,
+    SaveHistoryComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     GoogleChartsModule,
+    HttpClientModule,
   ],
-  providers: [AuthServService],
-  bootstrap: [AppComponent]
+  providers: [
+    AuthServService,
+    ApiService
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthServService } from 'src/app/core/auth/auth-serv.service';
+import { AuthServService } from '../auth-serv.service';
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss']
 })
-export class SidebarComponent implements OnInit {
+export class ProfileComponent implements OnInit {
 
-  // User profile
+  // User profile variable
   profile: any;
 
   constructor(public auth: AuthServService) { }

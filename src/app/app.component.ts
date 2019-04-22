@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthServService } from './core/auth/auth-serv.service';
 import { fadeAnimation } from './route-animations';
 
@@ -8,7 +8,7 @@ import { fadeAnimation } from './route-animations';
   styleUrls: ['./app.component.scss'],
   animations: [fadeAnimation] // Page transition animation
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'DRIS';
 
   constructor(public auth: AuthServService) {
@@ -16,8 +16,8 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    if (this.auth.isAuthenticated()) {
-      this.auth.renewTokens();
+    if (this.auth.loggedIn) {
+      this.auth.renewToken();
     }
   }
 }

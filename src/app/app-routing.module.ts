@@ -5,6 +5,8 @@ import { AboutComponent } from './pages/about/about.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { VisualizeComponent } from './core/visualize/visualize.component';
 import { TemplateComponent } from './core/visualize/template/template.component';
+import { CallbackComponent } from './pages/callback/callback.component';
+import { SaveHistoryComponent } from './user/save-history/save-history.component';
 //import { LoginComponent } from './core/auth/login/login.component';
 
 const routes: Routes = [
@@ -13,6 +15,8 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'new', component: TemplateComponent },
   { path: 'visualize', component: VisualizeComponent },
+  { path: 'callback', component: CallbackComponent },
+  { path: 'history', component: SaveHistoryComponent },
   //{ path: 'login', component: LoginComponent }
 ];
 
