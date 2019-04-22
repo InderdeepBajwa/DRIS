@@ -8,9 +8,10 @@ div {
     display: grid;
     //grid-template-areas:
     //    'app-sidebar app-sidebar app-chart app-chart app-chart';
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 5px;
-    padding-right: 10px;
+    grid-template-columns: repeat(10, 10%);
+    grid-gap: 2px;
+    padding-right: 1px;
+    max-height: 100vh;
 }
 
 app-sidebar {
@@ -25,7 +26,18 @@ div {
     background-color: white;
 }
 
+.container {
+    padding-top: 2em;
+    padding-right: 3em;
+}
+
+#saveButton {
+    grid-column: 10;
+    grid-row: 1;
+}
+
 // Sankey styles
 #sankey {
-    padding:3em;
+    grid-column: 1;
+    grid-row: 1;
 }

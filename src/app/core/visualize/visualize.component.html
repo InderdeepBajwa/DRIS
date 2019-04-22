@@ -4,8 +4,11 @@
     1. Visualized Sankey
 -->
 <div>
+  <p id="error">{{redirectErr}}</p>
   <app-sidebar></app-sidebar>
-  <svg #downloadSankey id="sankey" width="800" height="600" style="background-color: white;"></svg>
-  <button id="saveButton" (click)="saveSvg(downloadSankey,'test.jpg')" style="height: 20px">Save Chart</button>
+  <div class="container">
+    <svg #downloadSankey id="sankey" width="800" height="600" style="background-color: white;"></svg>
+  </div>
+  <button id="saveButton" (click)="saveSvg(downloadSankey,'test.jpg')" >Save Chart</button>
 </div>
 

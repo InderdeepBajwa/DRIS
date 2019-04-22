@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
+import { Router } from '@angular/router'
 import { DataDriverService } from './data-driver.service';
 import * as d3 from 'd3';
 import * as d3sankey from 'd3-sankey';
@@ -9,38 +10,74 @@ import saveSvgAsPng from 'save-svg-as-png';
   templateUrl: './visualize.component.html',
   styleUrls: ['./visualize.component.scss']
 })
+
 export class VisualizeComponent implements OnInit {
   message: string;
-  
+  redirectErr: string;
+  // Color scheme
+  color: string;
+  colors =
+    d3.scaleOrdinal()
+     .domain([
+    ])
+      .range([
+  ]);
   
   width = 1200;
   height = 600;
 
-  constructor(private receivedData: DataDriverService) {
+  constructor(private receivedData: DataDriverService, private router: Router) {
   }
 
   ngOnInit() {
     this.receivedData.currentMessage.subscribe(message => this.message = message);
+    this.receivedData.currentColor.subscribe(color => this.color = color);
+    // Error checking for null value
+    if (this.message == "" || this.message == null || this.message == "default message") {
+      this.redirectErr = "No chart input data found. Redirecting to /new to create new data.";
+      setTimeout(() => {
+        this.router.navigate(['/new']);
+      }, 3000);
+
+      return;
+    }
     this.drawChart();
+  }
+
+  // Save chart
+  saveSvg(diagram, name) {
+    saveSvgAsPng.saveSvgAsPng(d3.select('svg').node(), name, {backgroundColor: '#FFFFFF'})
   }
 
   public drawChart() {
 
     // Error checking for null value
-    if (this.message == "" || this.message == null) {
+    if (this.message == "" || this.message == null || this.message == "default message") {
+      this.redirectErr = "No chart input data found. Redirecting to /new to create new data.";
+      setTimeout(() => {
+        this.router.navigate(['/new']);
+      }, 3000);
+
       return;
     }
     
+    // Parsing color for color scheme
+    let thisColor = d3.csvParse(this.color);
+    console.log(this.color);
+    
+    let domainRange = { 'domain' : [], 'range' : [] };
+
+    thisColor.forEach(d => {
+      domainRange.domain.push(d.domain);
+      domainRange.range.push(d.range);
+    })
+
+    this.colors = d3.scaleOrdinal()
+        .domain(domainRange.domain)
+        .range(domainRange.range);
+
     // Color scheme
-    const color = d3.scaleOrdinal()
-      .domain([
-        'red',
-        'green'
-      ])
-      .range([
-        '#ffb2a8',
-        '#89ef56'
-      ]);
+    const color = this.colors;
         
 
     // Selecting Sankey element from HTML
@@ -71,7 +108,7 @@ export class VisualizeComponent implements OnInit {
     var node = svg.append("g")
         .attr("class", "nodes")
         .attr("font-family", "sans-serif")
-        .attr("font-size", 12)
+        .attr("font-size", 18)
         .selectAll("g");
     
     // Initializing graph (data container)

@@ -1,9 +1,11 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataDriverService } from '../data-driver.service';
+import saveSvgAsPng from 'save-svg-as-png';
 
 import * as d3 from 'd3';
 import * as d3sankey from 'd3-sankey';
+
 
 @Component({
   selector: 'app-chart',
@@ -11,15 +13,35 @@ import * as d3sankey from 'd3-sankey';
   styleUrls: ['./chart.component.scss']
 })
 export class ChartComponent implements OnInit {
+
+  // Listening for keypress combinations
+
+  @HostListener('document:keyup', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) { 
+    if (event.keyCode == 13 && event.ctrlKey) {
+      this.visualize(this.message, true);
+    }
+    if (event.ctrlKey && event.shiftKey && event.keyCode == 83) {
+      this.quickSave();
+    }
+    if (event.ctrlKey && event.shiftKey && event.keyCode == 83) {
+
+    }
+  }
+
   message: string;
   uniqueData: string = "";
 
+  colorInput: string;
   // Color scheme
   color =
+    // Initializing domain and range to null
     d3.scaleOrdinal()
      .domain([
+       ''
     ])
       .range([
+        ''
   ]);
 
   constructor(private data: DataDriverService, private router: Router) { }
@@ -30,19 +52,58 @@ export class ChartComponent implements OnInit {
   }
 
   newMessage(chartData: string) {
-    this.data.changeMessage("source,target,value\n" + chartData);
+    this.data.changeMessage("source,target,value\n" + chartData, 'domain,range\n' + this.colorInput);
     this.drawChart();
   }
 
-  visualize(chartData: string) {
-    this.data.changeMessage("source,target,value\n" + chartData);
+  visualize(chartData: string, doesContainHeader: boolean = false) {
+    if (doesContainHeader) {
+      this.data.changeMessage(chartData, 'domain,range\n' + this.colorInput);
+    } else {
+      this.data.changeMessage("source,target,value\n" + chartData, 'domain,range\n' + this.colorInput);
+    }
     this.router.navigateByUrl('visualize');
-
   }
+
+  // Quick save function
+  quickSave() {
+    saveSvgAsPng.saveSvgAsPng(d3.select('svg').node(), 'save.png', {backgroundColor: '#FFFFFF'})
+  }
+
+  // Save URI of Sankey image to cloud
+  saveToCloud() {
+    saveSvgAsPng.svgAsDataUri(d3.select('svg').node(), {}, function(uri) {
+      console.log('uri', uri);
+      window.location.href
+    });
+  }
+
 
   // Manages key presses in textarea (sankey typing)
   public keyPressed(event: any) {
     this.message = "source,target,value\n" + event.target.value;
+    this.drawChart();
+  }
+
+  public colorSelect(event: any, chartData: string) {
+    // Saving user color input
+    
+    this.colorInput =event.target.value;
+
+    let colors = d3.csvParse("domain,range\n" + this.colorInput);
+    
+    let domainRange = { 'domain' : [], 'range' : [] };
+
+    colors.forEach(d => {
+      domainRange.domain.push(d.domain);
+      domainRange.range.push(d.range);
+    })
+
+    this.color = d3.scaleOrdinal()
+        .domain(domainRange.domain)
+        .range(domainRange.range);
+
+    this.newMessage(chartData);
     this.drawChart();
   }
 
@@ -55,21 +116,16 @@ export class ChartComponent implements OnInit {
   public drawChart() {
 
     // Error checking for null value
-    if (this.message == "" || this.message == null) {
+    if (this.message == "" || this.message == null || this.message == "default message") {
+      console.log("Err " + this.message);
       return;
     }
     
     // Color scheme
-    const color = d3.scaleOrdinal()
-      .domain([
-        'red',
-        'green'
-      ])
-      .range([
-        '#ffb2a8',
-        '#89ef56'
-      ]);
-        
+    const color = this.color;
+    
+    // Removing spaces from input
+    this.message = this.message.replace(/ /g, '')
 
     // Selecting Sankey element from HTML
     var svg = d3.select("#sankey"),
@@ -106,6 +162,7 @@ export class ChartComponent implements OnInit {
     var graph = { "nodes" : [], "links" : [] };
 
     var sankeyData = d3.csvParse(this.message);
+    
     sankeyData.forEach(d => {
       this.uniqueData += d.source + '\n';
       graph.nodes.push({ "name": d.source});
@@ -114,8 +171,6 @@ export class ChartComponent implements OnInit {
                         "target" : d.target,
                         "value": +d.value });
     });
-
-    
 
     graph.nodes = d3.map(graph.nodes, function(d) {return d.name;}).keys();
 
@@ -131,7 +186,18 @@ export class ChartComponent implements OnInit {
     // append a defs (for definition) element to your SVG
     const defs = svg.append('defs');
     
-    sankey(graph);
+    try {
+      sankey(graph);
+    }
+    catch (e) {
+      if(e.message == 'circular link') {
+        console.log("ITS A CIRCLE!!!");
+      }
+      else {
+        console.log(e.message);
+      }
+      return;
+    }
 
     link = link
         .data(graph.links)
