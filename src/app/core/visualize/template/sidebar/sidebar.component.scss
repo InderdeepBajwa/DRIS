@@ -1,0 +1,33 @@
+
+// Importing global variables
+@import "../../../../../masterVariables.scss";
+
+aside {
+    // Adjustments
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    max-width: 4em;
+
+    
+    background-color: $masterColor;
+
+    a {
+        padding: 35px 8px 20px 0px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #ffffff;
+        display: block;
+        transition: 0.3s;
+        
+        &:hover {
+            color: rgb(223, 223, 223);
+        }
+        
+        text-align: center;
+        i {
+            font-size: 50px;
+        }
+        
+    }
+}

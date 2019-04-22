@@ -12,11 +12,11 @@ export class AuthServService {
   private _expiresAt: number;
 
   auth0 = new auth0.WebAuth({
-    clientID: '##',
+    clientID: 'rsRf9EBmeGfI6cQR7Q4D1xKAbtbp3Prn',
     domain: 'dris.auth0.com',
     responseType: 'token id_token',
     redirectUri: 'https://sankey.desktopluxury.com/',
-    scope: 'openid'
+    scope: 'openid profile'
   });
   
   constructor(public router: Router) {
@@ -79,5 +79,23 @@ export class AuthServService {
     // access token's expiry time
     return this._accessToken && Date.now() < this._expiresAt;
   }
-  
+
+  // User profile
+
+  userProfile: any;
+
+  public getProfile(cb): void {
+    if (!this._accessToken) {
+      throw new Error('Access Token doesn\'t exist');
+    }
+
+    const self = this;
+    this.auth0.client.userInfo(this._accessToken, (err, profile) => {
+      if (profile) {
+        self.userProfile = profile;
+      }
+      cb(err, profile);
+    })
+  }
+
 }

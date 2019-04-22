@@ -1,11 +1,16 @@
 <!-- Pages -->
 
-<!-- Navbar starts -->
+<!-- 
 <app-nav></app-nav>
-<!-- Navbar starts -->
+    Navbar implemented in micro modules. Not necessary here.
+    Enable only if menu is required everywhere.
+-->
 
-<!-- Page render starts -->
-<router-outlet></router-outlet>
+<!-- Page render starts
+<router-outlet></router-outlet>-->
+<div [@fadeAnimation]="o.isActivated ? o.activatedRoute : ''">
+    <router-outlet #o="outlet"></router-outlet>
+</div>
 <!-- Page render ends -->
 
 <!-- TODO: Footer -->

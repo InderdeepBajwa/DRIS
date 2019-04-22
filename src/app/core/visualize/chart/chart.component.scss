@@ -1,0 +1,23 @@
+
+// Importing global variables
+@import "../../../../masterVariables.scss";
+
+section {
+    padding: 0;
+    margin: 0;
+}
+
+#chartInput {
+    width: 70%;
+    min-height: 100%;
+    resize: none;
+    margin-top: 20em;
+}
+
+#colorSelect {
+    width: 25%;
+    height: 20vh;
+    resize: none;
+    float: right;
+    margin-top: 20em;
+}

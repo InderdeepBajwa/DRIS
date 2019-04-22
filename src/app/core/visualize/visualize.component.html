@@ -1,3 +1,14 @@
-<p>
-  visualize works!
-</p>
+
+<!--
+  This file contains (website-address.tdl/new):
+    1. Visualized Sankey
+-->
+<div>
+  <p id="error">{{redirectErr}}</p>
+  <app-sidebar></app-sidebar>
+  <div class="container">
+    <svg #downloadSankey id="sankey" width="800" height="600" style="background-color: white;"></svg>
+  </div>
+  <button id="saveButton" (click)="saveSvg(downloadSankey,'test.jpg')" >Save Chart</button>
+</div>
+

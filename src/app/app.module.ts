@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,6 +13,13 @@ import { VisualizeComponent } from './core/visualize/visualize.component';
 // Authentication service
 import { AuthServService } from './core/auth/auth-serv.service';
 import { LoginComponent } from './core/auth/login/login.component';
+import { TemplateComponent } from './core/visualize/template/template.component';
+import { SidebarComponent } from './core/visualize/template/sidebar/sidebar.component';
+import { ChartComponent } from './core/visualize/chart/chart.component';
+import { PrevchartComponent } from './core/visualize/template/prevchart/prevchart.component';
+
+// Charting service
+import { GoogleChartsModule } from 'angular-google-charts';
 
 @NgModule({
   declarations: [
@@ -21,11 +29,17 @@ import { LoginComponent } from './core/auth/login/login.component';
     AboutComponent,
     ContactComponent,
     VisualizeComponent,
-    LoginComponent
+    LoginComponent,
+    TemplateComponent,
+    SidebarComponent,
+    ChartComponent,
+    PrevchartComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    GoogleChartsModule,
   ],
   providers: [AuthServService],
   bootstrap: [AppComponent]

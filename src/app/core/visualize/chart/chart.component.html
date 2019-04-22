@@ -1,0 +1,7 @@
+
+<section>
+    <textarea #textData (keyup.enter)="keyPressed($event)" spellcheck="false" contenteditable="true" name="" id="chartInput" cols="30" rows="25" placeholder="{{'Source, Destination, Value'}}"></textarea>
+    <textarea #uniqueInputs (keyup.enter)="colorSelect($event, textData.value)" spellcheck="false" contenteditable="false" name="" id="colorSelect" cols="2" rows="10" placeholder="{{'Node,\tColor'}}" value="domain,rage"></textarea>
+    <button (click)="visualize(textData.value)">Visualize Now</button>
+    <button (click)="newMessage(textData.value)">Check Visual</button>
+</section>

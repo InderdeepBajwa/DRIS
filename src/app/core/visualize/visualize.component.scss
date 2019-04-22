@@ -1,0 +1,43 @@
+
+// Sidebar control
+
+aside { grid-area: sidebar; }
+aside { grid-area: chart; }
+
+div {
+    display: grid;
+    //grid-template-areas:
+    //    'app-sidebar app-sidebar app-chart app-chart app-chart';
+    grid-template-columns: repeat(10, 10%);
+    grid-gap: 2px;
+    padding-right: 1px;
+    max-height: 100vh;
+}
+
+app-sidebar {
+    grid-column: 1;
+    grid-row: 1;
+
+    margin: 0;
+    padding: 0;
+}
+
+div {
+    background-color: white;
+}
+
+.container {
+    padding-top: 2em;
+    padding-right: 3em;
+}
+
+#saveButton {
+    grid-column: 10;
+    grid-row: 1;
+}
+
+// Sankey styles
+#sankey {
+    grid-column: 1;
+    grid-row: 1;
+}
