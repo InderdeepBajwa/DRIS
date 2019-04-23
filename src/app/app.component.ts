@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   title = 'DRIS';
 
   constructor(public auth: AuthServService) {
-    auth.handleAuthentication();
+    auth.handleAuth();
   }
 
   ngOnInit() {

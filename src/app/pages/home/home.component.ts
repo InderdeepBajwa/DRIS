@@ -10,10 +10,10 @@ export class HomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    // @ts-ignore
+    new Vivus('canvas', {start: 'autostart', type: 'delayed', duration: 150, animTimingFunction: Vivus.EASE}, function(car){
+      setTimeout(function(){ car.reset().play(); }, 3000);
+    });
   }
-
-  firstClick() {
-    console.log('clicked')
-  }
-
+  
 }

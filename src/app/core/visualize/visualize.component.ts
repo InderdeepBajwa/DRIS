@@ -1,4 +1,4 @@
-import { Component, OnInit, } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router'
 import { DataDriverService } from './data-driver.service';
 import * as d3 from 'd3';
@@ -21,6 +21,18 @@ import { catchError } from 'rxjs/operators';
 })
 
 export class VisualizeComponent implements OnInit {
+
+  // Key handler for shortcuts
+  @HostListener('document:keyup', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.ctrlKey && event.shiftKey && event.keyCode == 83) {
+      this.quickSave();
+    }
+    if (event.ctrlKey && (event.keyCode == 18) && event.keyCode == 83) {
+      // TODO: Save to cloud
+    }
+  }
+
   message: string;
   redirectErr: string;
   // Color scheme
@@ -34,6 +46,9 @@ export class VisualizeComponent implements OnInit {
   
   width = 1200;
   height = 600;
+
+  visualModel: VisualizationModel;
+  submitVisual: Subscription;
 
   constructor(
     private receivedData: DataDriverService,
@@ -57,7 +72,6 @@ export class VisualizeComponent implements OnInit {
     }
     this.drawChart();
 
-    this._uploadVisualization();
   }
 
   // Save chart
@@ -239,6 +253,12 @@ export class VisualizeComponent implements OnInit {
     }
   }
 
+  // QuickSave
+  // Press CTRL + SHIFT + S to save
+  quickSave() {
+    saveSvgAsPng.saveSvgAsPng(d3.select('svg').node(), 'save.png', {backgroundColor: '#FFFFFF', encoderOptions: 1})
+  }
+
 
   // Saving functions
   getImgUrl(): string {
@@ -246,12 +266,12 @@ export class VisualizeComponent implements OnInit {
   }
 
   // Save URI of Sankey image to cloud
-  getUri(): string {
+  getUri() {
     let imgUri: any;
     saveSvgAsPng.svgAsDataUri(d3.select('svg').node(), {}, function(uri) {
-      imgUri = uri;
+      imgUri = uri.toString();
     });
-    return "TestURI";
+    return imgUri;
   }
 
 
@@ -273,11 +293,14 @@ export class VisualizeComponent implements OnInit {
       new Date(),
       'google-oauth2|111260364297332924329'
     );
-    console.log(visualData);
 
-    this.api.postVisual$(visualData);
-    
+    console.log(visualData)
+
+    // this.api.postVisual$(visualData)
+    //   .subscribe(
+    //     data => console.log(data),
+    //     err => console.log(err)
+    //   );
   }
-
 
 }

@@ -67,7 +67,7 @@ export class ChartComponent implements OnInit {
 
   // Quick save function
   quickSave() {
-    saveSvgAsPng.saveSvgAsPng(d3.select('svg').node(), 'save.png', {backgroundColor: '#FFFFFF'})
+    saveSvgAsPng.saveSvgAsPng(d3.select('svg').node(), 'save.png', {backgroundColor: '#FFFFFF', encoderOptions: 1, scale: 2})
   }
 
   // Save URI of Sankey image to cloud

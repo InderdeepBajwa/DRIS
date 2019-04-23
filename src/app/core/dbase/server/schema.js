@@ -14,6 +14,7 @@ const visualizationSchema = new mongoose.Schema({
     uri: { type: String, required: true },
     imgUrl: { type: String, required: true },
     createDate: { type: Date, required: true},
+    userId: { type: String, required: true }
 });
 
 module.exports = mongoose.model('Visualization', visualizationSchema);

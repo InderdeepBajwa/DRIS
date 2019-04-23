@@ -9,6 +9,7 @@
 const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
 const Visualization = require('./schema');
+const bodyParser = require('body-parser');
 
 /*
  |--------------------------------------
@@ -23,10 +24,10 @@ module.exports = function(app, config) {
             cache: true,
             rateLimit: true,
             jwksRequestsPerMinute: 5,
-            jwksUri: `https://dris0.auth0.com/.well-known/jwks.json` // https://${config.AUTH0_DOMAIN}/.well-known/jwks.json
-        }),
+            jwksUri: `https://${config.AUTH0_DOMAIN}/.well-known/jwks.json`
+          }),
         audience: config.AUTH0_API_AUDIENCE,
-        issuer: `https://dris0.auth0.com/`, // https://${config.AUTH0_DOMAIN}/
+        issuer: `https://${config.AUTH0_DOMAIN}/`,
         algorithm: 'RS256'
     });
 
@@ -39,19 +40,20 @@ module.exports = function(app, config) {
    const eventListProjection = 'title';
    
    // Saving visualization API
-   app.post('/api/save', async (req, res) => {
+   app.post('/api/save', (req, res) => {
+     console.log(req.body)
      const visual = new Visualization(req.body);
-     visual.save((err) => {
+     console.log(visual)
+     visual.save((err, thisVisual) => {
        if (err) {
-         return res.status(500).send({message: err.message})
+         console.log("Error: ", err)
        }
-       res.send(visual);
+       res.send(thisVisual);
      })
    });
 
    // GET list of public events starting in the future
    app.get('/api/visualizations', (req, res) => {
-     console.log(jwtCheck)
      Visualization.find({}, (err, events) => {
        let eventsArr = [];
        if (err) { return res.status(500).send({message: err.message}); }
@@ -78,6 +80,26 @@ module.exports = function(app, config) {
         });
     });
 
- 
+    // Get user visualizations
+    app.get('/api/myvisual', jwtCheck, (req, res) => {
+      Event.find({}, (err, events) => {
+        let eventsArr = [];
+        if (err) {
+          return res.status(500).send({message: err.message});
+        }
+        if (events) {
+          events.forEach(event => {
+            eventsArr.push(event);
+          });
+        }
+        res.send(eventsArr);
+      });
+    });
 
+
+    // API for visualization-interactions
+    app.post('/api/create', bodyParser.text(), async (req, res) => {
+      await console.log(req.body);
+      res.send('Ok');
+    })
 }

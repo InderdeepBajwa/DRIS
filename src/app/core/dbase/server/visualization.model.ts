@@ -4,7 +4,6 @@ export class VisualizationModel {
         public uri: string,
         public imgUrl: string,
         public createDate: Date,
-        public userId: string,
-        public _id?: string
+        public userId: string
     ) {}
 }

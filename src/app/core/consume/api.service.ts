@@ -29,7 +29,7 @@ export class ApiService {
   postVisual$(visual: VisualizationModel): Observable<VisualizationModel> {
     console.log(<VisualizationModel>(visual));
     return this.http
-        .post<VisualizationModel>("https://postman-echo.com/post", visual, this.httpOptions)
+        .post<VisualizationModel>(`${ENV.BASE_API}save`, visual, this.httpOptions)
         .pipe(catchError((error) => this._handleError(error))
     );
   }
@@ -37,7 +37,18 @@ export class ApiService {
   // Get list of all visualizations
   getVisualizations$(): Observable<VisualizationModel[]> {
     return this.http
-      .get<VisualizationModel[]>(`http://localhost:8083/api/visualizations/`)
+      .get<VisualizationModel[]>(`${ENV.BASE_API}visualizations/`)
+      .pipe(
+        catchError((error) => this._handleError(error))
+    );
+  }
+
+  // Get list of current user's visualizations
+  getMyVisualizations$(): Observable<VisualizationModel[]> {
+    return this.http
+      .get<VisualizationModel[]>(`${ENV.BASE_API}myvisual`, {
+        headers: new HttpHeaders().set('Authorization', this._authHeader)
+      })
       .pipe(
         catchError((error) => this._handleError(error))
     );

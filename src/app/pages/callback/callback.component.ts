@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthServService } from 'src/app/core/auth/auth-serv.service';
+import { AuthServService } from './../../core/auth/auth-serv.service';
 
 
 @Component({
@@ -10,7 +10,7 @@ import { AuthServService } from 'src/app/core/auth/auth-serv.service';
 export class CallbackComponent implements OnInit {
 
   constructor(private auth: AuthServService) {
-    auth.handleAuthentication();
+    auth.handleAuth();
    }
 
   ngOnInit() {

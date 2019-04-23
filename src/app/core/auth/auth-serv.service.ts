@@ -1,31 +1,24 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Subscription, of, timer } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
-
+import { BehaviorSubject } from 'rxjs';
+import { AUTH_CONFIG } from './auth.config';
 import * as auth0 from 'auth0-js';
-
-// Environment variables to manage production and development URLs
 import { ENV } from './../env.config';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AuthServService {
-
+  // Create Auth0 web auth instance
   private _auth0 = new auth0.WebAuth({
-    clientID: 'wey99dpsWpGBeQ76ZRzz0KrJRXbvoPE8',
-    domain: 'dris0.auth0.com',
+    clientID: AUTH_CONFIG.CLIENT_ID,
+    domain: AUTH_CONFIG.CLIENT_DOMAIN,
     responseType: 'token',
-    audience: 'http://localhost:8083/api',
-    redirectUri: 'http://localhost:4200/callback',
-    scope: 'openid profile'
+    redirectUri: AUTH_CONFIG.REDIRECT,
+    audience: AUTH_CONFIG.AUDIENCE,
+    scope: AUTH_CONFIG.SCOPE
   });
-
   accessToken: string;
   userProfile: any;
   expiresAt: number;
-  
   // Create a stream of logged in status to communicate throughout app
   loggedIn: boolean;
   loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
@@ -49,7 +42,7 @@ export class AuthServService {
     this._auth0.authorize();
   }
 
-  handleAuthentication() {
+  handleAuth() {
     // When Auth0 hash parsed, get profile
     this._auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken) {
@@ -95,8 +88,8 @@ export class AuthServService {
     this._clearExpiration();
     // End Auth0 authentication session
     this._auth0.logout({
-      clientId: "wey99dpsWpGBeQ76ZRzz0KrJRXbvoPE8",
-      returnTo: "http://localhost:4200"
+      clientId: AUTH_CONFIG.CLIENT_ID,
+      returnTo: ENV.BASE_URI
     });
   }
 
