@@ -25,6 +25,11 @@ import { CallbackComponent } from './pages/callback/callback.component';
 import { SaveHistoryComponent } from './user/save-history/save-history.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './core/consume/api.service';
+import { VisualGenerateComponent } from './core/consume/visual-generate/visual-generate.component';
+
+// Firebase
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireStorage, AngularFireStorageModule, StorageBucket } from '@angular/fire/storage'
 
 @NgModule({
   declarations: [
@@ -42,6 +47,7 @@ import { ApiService } from './core/consume/api.service';
     ProfileComponent,
     CallbackComponent,
     SaveHistoryComponent,
+    VisualGenerateComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,10 +55,27 @@ import { ApiService } from './core/consume/api.service';
     AppRoutingModule,
     GoogleChartsModule,
     HttpClientModule,
+    AngularFireModule.initializeApp(
+      {
+        provider: false,
+        firebase: {apiKey: "AIzaSyAhY7PHvOAZmAPjVXaFz3oT_6CRNHlVJbg",
+        authDomain: "paychex-c1894.firebaseapp.com",
+        databaseURL: "https://paychex-c1894.firebaseio.com",
+        projectId: "paychex-c1894",
+        storageBucket: "paychex-c1894.appspot.com",
+        messagingSenderId: "348557116375"
+      }
+      }
+    ),
+    AngularFireStorageModule,
   ],
   providers: [
     AuthServService,
-    ApiService
+    ApiService,
+    {
+      provide: StorageBucket,
+      useValue: 'paychex-c1894.appspot.com'
+    }
   ],
   bootstrap: [AppComponent],
 })

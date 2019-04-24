@@ -4,7 +4,7 @@
 
 // Home section
 .home-section {
-    height: 40%;
+    height: 38%;
     width: 100%;
     text-align: center;
     background-color: rgba(255, 255, 255, 0.3);
@@ -18,11 +18,23 @@
 
 
 .example-section {
-    height: 49%;
+    height: 47%;
     width: 100%;
+    padding: 1em;
+    margin-top: 0;
     margin: auto auto;
     text-align: center;
     background-color: rgba(255, 255, 255, 0.3);
+    display: grid;
+    grid-column: 
+
+    svg {
+        float: left;
+    }
+
+    div {
+        
+    }
 }
 
 // Designing the button

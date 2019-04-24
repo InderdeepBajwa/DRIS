@@ -1,29 +1,28 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router'
-import { DataDriverService } from './data-driver.service';
+import { DataDriverService } from './../../visualize/data-driver.service';
 import * as d3 from 'd3';
 import * as d3sankey from 'd3-sankey';
 import saveSvgAsPng from 'save-svg-as-png';
 
 // Authentication and Database handling
-import { ApiService } from './../../core/consume/api.service';
+import { ApiService } from './../api.service';
 import { Subscription, Observable } from 'rxjs';
-import { VisualizationModel } from './../../core/dbase/server/visualization.model';
-import { AuthServService } from './../auth/auth-serv.service';
+import { VisualizationModel } from './../../dbase/server/visualization.model';
+import { AuthServService } from './../../auth/auth-serv.service';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http'
 import { catchError } from 'rxjs/operators';
 
 // Storage
-import { AngularFireStorageModule, AngularFireStorage, StorageBucket } from '@angular/fire/storage';
+
 
 @Component({
-  selector: 'app-visualize',
-  templateUrl: './visualize.component.html',
-  styleUrls: ['./visualize.component.scss']
-})
+  selector: 'app-visual-generate',
+  templateUrl: './visual-generate.component.html',
+  styleUrls: ['./visual-generate.component.scss']
+})  
 
-export class VisualizeComponent implements OnInit {
-
+export class VisualGenerateComponent implements OnInit {
   // Key handler for shortcuts
   @HostListener('document:keyup', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
@@ -53,16 +52,12 @@ export class VisualizeComponent implements OnInit {
   visualModel: VisualizationModel;
   submitVisual: Subscription;
 
-  // Storage
-  storageRef: any;
-
   constructor(
     private receivedData: DataDriverService,
     private router: Router,
     private api: ApiService,
     private auth: AuthServService,
-    private http: HttpClient,
-    private storage: AngularFireStorage
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
@@ -79,13 +74,6 @@ export class VisualizeComponent implements OnInit {
     }
     this.drawChart();
 
-    // Initialize firebase
-    // TODO Delete
-    
-
-    let file = this.getUri();
-    let ref = this.storage.ref('images');
-    ref.putString("HEJKHAKJSHDAS");
   }
 
   // Save chart
@@ -281,9 +269,11 @@ export class VisualizeComponent implements OnInit {
 
   // Save URI of Sankey image to cloud
   getUri() {
-    return saveSvgAsPng.svgAsDataUri(d3.select('svg').node(), {}, function(uri) {
-      return uri;
+    let imgUri: any;
+    saveSvgAsPng.svgAsDataUri(d3.select('svg').node(), {}, function(uri) {
+      imgUri = uri.toString();
     });
+    return imgUri;
   }
 
 
@@ -293,20 +283,14 @@ export class VisualizeComponent implements OnInit {
   visualizationsList: VisualizationModel[];
   error: boolean;
 
-
-  // Storage handling
-  _makeStorageConnection() {
-
-  }
+  
 
   // Submitting data to database
   private _uploadVisualization() {
-
-    
-
+    console.log("request made");
     var visualData = new VisualizationModel(
       'Test',
-      this.getUri().then((val => { console.log(val)})),
+      this.getUri(),
       this.getImgUrl(),
       new Date(),
       'google-oauth2|111260364297332924329'
@@ -314,11 +298,11 @@ export class VisualizeComponent implements OnInit {
 
     console.log(visualData)
 
-    this.api.postVisual$(visualData)
-      .subscribe(
-        data => console.log(data),
-        err => console.log(err)
-    );
+    // this.api.postVisual$(visualData)
+    //   .subscribe(
+    //     data => console.log(data),
+    //     err => console.log(err)
+    //   );
   }
 
 }
