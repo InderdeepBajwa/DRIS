@@ -295,14 +295,12 @@ export class VisualizeComponent implements OnInit {
   // Submitting data to database
   private _uploadVisualization() {
     console.log("UPloading");
-    const blob = this.getUri().then(val => {return val});
-    const url = URL.createObjectURL(blob);
+    const img = this.getUri().then(val => {return val});
+    const blob = new Blob([img], { type: "image/png"});
 
-    console.log(url);
-
+    
     let ref = this.storage.ref('/images' + "randomName");
-    ref.put(url);
-
+    ref.put(blob);
 
     var visualData = new VisualizationModel(
       'Test',
