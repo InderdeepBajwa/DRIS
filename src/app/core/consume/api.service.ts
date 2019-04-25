@@ -20,16 +20,10 @@ export class ApiService {
     return `Bearer ${this.auth.accessToken}`;
   }
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-    })
-  }
-
   postVisual$(visual: VisualizationModel): Observable<VisualizationModel> {
     console.log(<VisualizationModel>(visual));
     return this.http
-        .post<VisualizationModel>(`${ENV.BASE_API}save`, visual, this.httpOptions)
+        .post<VisualizationModel>(`${ENV.BASE_API}save`, visual)
         .pipe(catchError((error) => this._handleError(error))
     );
   }
@@ -37,7 +31,8 @@ export class ApiService {
   // Get list of all visualizations
   getVisualizations$(): Observable<VisualizationModel[]> {
     return this.http
-      .get<VisualizationModel[]>(`${ENV.BASE_API}visualizations/`)
+      .get<VisualizationModel[]>(`${ENV.BASE_API}myVisual/`,
+          { headers: new HttpHeaders().set('Authorization', this._authHeader)})
       .pipe(
         catchError((error) => this._handleError(error))
     );

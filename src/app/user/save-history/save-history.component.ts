@@ -3,6 +3,7 @@ import { ApiService } from './../../core/consume/api.service';
 import { Subscription } from 'rxjs';
 import { VisualizationModel } from './../../core/dbase/server/visualization.model';
 import { Title } from '@angular/platform-browser';
+import { AuthServService } from './../../core/auth/auth-serv.service';
 
 @Component({
   selector: 'app-save-history',
@@ -17,16 +18,21 @@ export class SaveHistoryComponent implements OnInit {
 
   constructor(
     private title: Title,
-    private api: ApiService
+    private api: ApiService,
+    private auth: AuthServService
   ) { }
 
   ngOnInit() {
     this.title.setTitle("Previous Visualizations");
-    this._getEventList();
+    this._getSaveList();
   }
 
-  private _getEventList() {
+  private _getSaveList() {
     // Get visualizations
+    if (!this.auth.loggedIn) {
+      console.log("Error: Not logged in")
+      return;
+    }
     this.VisualizationListSub = this.api
       .getVisualizations$()
       .subscribe(
@@ -34,7 +40,6 @@ export class SaveHistoryComponent implements OnInit {
           this.visualizationsList = res;
         },
         err => {
-          console.error(err);
           this.error = true;
         }
       );

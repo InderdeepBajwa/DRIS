@@ -14,13 +14,6 @@ export class SidebarComponent implements OnInit {
   constructor(public auth: AuthServService) { }
 
   ngOnInit() {
-    // if (this.auth.userProfile) {
-    //   this.profile = this.auth.userProfile;
-    // } else {
-    //   this.auth._getProfile((err, profile) => {
-    //     this.profile = profile;
-    //   });
-    // }
   }
 
 }

@@ -8,7 +8,7 @@ interface AuthConfig {
     CLIENT_DOMAIN: string;
     AUDIENCE: string;
     REDIRECT: string;
-    SCOPE: string
+    SCOPE: string;
 }
 
 export const AUTH_CONFIG: AuthConfig = {

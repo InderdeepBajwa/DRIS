@@ -125,7 +125,7 @@ export class ChartComponent implements OnInit {
     const color = this.color;
     
     // Removing spaces from input
-    this.message = this.message.replace(/ /g, '')
+    this.message = this.message.replace(/, /g, ',')
 
     // Selecting Sankey element from HTML
     var svg = d3.select("#sankey"),

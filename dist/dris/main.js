@@ -115,12 +115,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _core_auth_auth_serv_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./core/auth/auth-serv.service */ "./src/app/core/auth/auth-serv.service.ts");
 /* harmony import */ var _route_animations__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./route-animations */ "./src/app/route-animations.ts");
+/* harmony import */ var _angular_fire_storage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/fire/storage */ "./node_modules/@angular/fire/storage/index.js");
+
 
 
 
 
 var AppComponent = /** @class */ (function () {
-    function AppComponent(auth) {
+    function AppComponent(auth, storage) {
         this.auth = auth;
         this.title = 'DRIS';
         auth.handleAuth();
@@ -138,7 +140,7 @@ var AppComponent = /** @class */ (function () {
             ,
             styles: [__webpack_require__(/*! ./app.component.scss */ "./src/app/app.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_core_auth_auth_serv_service__WEBPACK_IMPORTED_MODULE_2__["AuthServService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_core_auth_auth_serv_service__WEBPACK_IMPORTED_MODULE_2__["AuthServService"], _angular_fire_storage__WEBPACK_IMPORTED_MODULE_4__["AngularFireStorage"]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -180,6 +182,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _user_save_history_save_history_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./user/save-history/save-history.component */ "./src/app/user/save-history/save-history.component.ts");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _core_consume_api_service__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./core/consume/api.service */ "./src/app/core/consume/api.service.ts");
+/* harmony import */ var _core_consume_visual_generate_visual_generate_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./core/consume/visual-generate/visual-generate.component */ "./src/app/core/consume/visual-generate/visual-generate.component.ts");
+/* harmony import */ var _angular_fire__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @angular/fire */ "./node_modules/@angular/fire/index.js");
+/* harmony import */ var _angular_fire_storage__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @angular/fire/storage */ "./node_modules/@angular/fire/storage/index.js");
 
 
 
@@ -205,6 +210,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+// Firebase
+
+
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -225,6 +234,7 @@ var AppModule = /** @class */ (function () {
                 _core_auth_profile_profile_component__WEBPACK_IMPORTED_MODULE_18__["ProfileComponent"],
                 _pages_callback_callback_component__WEBPACK_IMPORTED_MODULE_19__["CallbackComponent"],
                 _user_save_history_save_history_component__WEBPACK_IMPORTED_MODULE_20__["SaveHistoryComponent"],
+                _core_consume_visual_generate_visual_generate_component__WEBPACK_IMPORTED_MODULE_23__["VisualGenerateComponent"],
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
@@ -232,10 +242,25 @@ var AppModule = /** @class */ (function () {
                 _app_routing_module__WEBPACK_IMPORTED_MODULE_4__["AppRoutingModule"],
                 angular_google_charts__WEBPACK_IMPORTED_MODULE_17__["GoogleChartsModule"],
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_21__["HttpClientModule"],
+                _angular_fire__WEBPACK_IMPORTED_MODULE_24__["AngularFireModule"].initializeApp({
+                    provider: false,
+                    firebase: { apiKey: "AIzaSyAhY7PHvOAZmAPjVXaFz3oT_6CRNHlVJbg",
+                        authDomain: "paychex-c1894.firebaseapp.com",
+                        databaseURL: "https://paychex-c1894.firebaseio.com",
+                        projectId: "paychex-c1894",
+                        storageBucket: "paychex-c1894.appspot.com",
+                        messagingSenderId: "348557116375"
+                    }
+                }),
+                _angular_fire_storage__WEBPACK_IMPORTED_MODULE_25__["AngularFireStorageModule"],
             ],
             providers: [
                 _core_auth_auth_serv_service__WEBPACK_IMPORTED_MODULE_11__["AuthServService"],
-                _core_consume_api_service__WEBPACK_IMPORTED_MODULE_22__["ApiService"]
+                _core_consume_api_service__WEBPACK_IMPORTED_MODULE_22__["ApiService"],
+                {
+                    provide: _angular_fire_storage__WEBPACK_IMPORTED_MODULE_25__["StorageBucket"],
+                    useValue: 'paychex-c1894.appspot.com'
+                }
             ],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"]],
         })
@@ -610,6 +635,293 @@ var ApiService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/core/consume/visual-generate/visual-generate.component.html":
+/*!*****************************************************************************!*\
+  !*** ./src/app/core/consume/visual-generate/visual-generate.component.html ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  visual-generate works!\n</p>\n"
+
+/***/ }),
+
+/***/ "./src/app/core/consume/visual-generate/visual-generate.component.scss":
+/*!*****************************************************************************!*\
+  !*** ./src/app/core/consume/visual-generate/visual-generate.component.scss ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvcmUvY29uc3VtZS92aXN1YWwtZ2VuZXJhdGUvdmlzdWFsLWdlbmVyYXRlLmNvbXBvbmVudC5zY3NzIn0= */"
+
+/***/ }),
+
+/***/ "./src/app/core/consume/visual-generate/visual-generate.component.ts":
+/*!***************************************************************************!*\
+  !*** ./src/app/core/consume/visual-generate/visual-generate.component.ts ***!
+  \***************************************************************************/
+/*! exports provided: VisualGenerateComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VisualGenerateComponent", function() { return VisualGenerateComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _visualize_data_driver_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../../visualize/data-driver.service */ "./src/app/core/visualize/data-driver.service.ts");
+/* harmony import */ var d3__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! d3 */ "./node_modules/d3/index.js");
+/* harmony import */ var d3_sankey__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! d3-sankey */ "./node_modules/d3-sankey/src/index.js");
+/* harmony import */ var save_svg_as_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! save-svg-as-png */ "./node_modules/save-svg-as-png/lib/saveSvgAsPng.js");
+/* harmony import */ var save_svg_as_png__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(save_svg_as_png__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _api_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./../api.service */ "./src/app/core/consume/api.service.ts");
+/* harmony import */ var _dbase_server_visualization_model__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./../../dbase/server/visualization.model */ "./src/app/core/dbase/server/visualization.model.ts");
+/* harmony import */ var _auth_auth_serv_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./../../auth/auth-serv.service */ "./src/app/core/auth/auth-serv.service.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+
+
+
+
+
+
+
+// Authentication and Database handling
+
+
+
+
+// Storage
+var VisualGenerateComponent = /** @class */ (function () {
+    function VisualGenerateComponent(receivedData, router, api, auth, http) {
+        this.receivedData = receivedData;
+        this.router = router;
+        this.api = api;
+        this.auth = auth;
+        this.http = http;
+        this.colors = d3__WEBPACK_IMPORTED_MODULE_4__["scaleOrdinal"]()
+            .domain([])
+            .range([]);
+        this.width = 1200;
+        this.height = 600;
+    }
+    // Key handler for shortcuts
+    VisualGenerateComponent.prototype.handleKeyboardEvent = function (event) {
+        if (event.ctrlKey && event.shiftKey && event.keyCode == 83) {
+            this.quickSave();
+        }
+        // @ts-ignore
+        if (event.ctrlKey && (event.keyCode == 18) && event.keyCode == 83) {
+            // TODO: Save to cloud
+        }
+    };
+    VisualGenerateComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.receivedData.currentMessage.subscribe(function (message) { return _this.message = message; });
+        this.receivedData.currentColor.subscribe(function (color) { return _this.color = color; });
+        // Error checking for null value
+        if (this.message == "" || this.message == null || this.message == "default message") {
+            this.redirectErr = "No chart input data found. Redirecting to /new to create new data.";
+            setTimeout(function () {
+                _this.router.navigate(['/new']);
+            }, 3000);
+            return;
+        }
+        this.drawChart();
+    };
+    // Save chart
+    VisualGenerateComponent.prototype.saveSvg = function (diagram, name) {
+        save_svg_as_png__WEBPACK_IMPORTED_MODULE_6___default.a.saveSvgAsPng(d3__WEBPACK_IMPORTED_MODULE_4__["select"]('svg').node(), name, { backgroundColor: '#FFFFFF' });
+    };
+    VisualGenerateComponent.prototype.drawChart = function () {
+        var _this = this;
+        // Error checking for null value
+        if (this.message == "" || this.message == null || this.message == "default message") {
+            this.redirectErr = "No chart input data found. Redirecting to /new to create new data.";
+            setTimeout(function () {
+                _this.router.navigate(['/new']);
+            }, 3000);
+            return;
+        }
+        // Parsing color for color scheme
+        var thisColor = d3__WEBPACK_IMPORTED_MODULE_4__["csvParse"](this.color);
+        console.log(this.color);
+        var domainRange = { 'domain': [], 'range': [] };
+        thisColor.forEach(function (d) {
+            domainRange.domain.push(d.domain);
+            domainRange.range.push(d.range);
+        });
+        this.colors = d3__WEBPACK_IMPORTED_MODULE_4__["scaleOrdinal"]()
+            .domain(domainRange.domain)
+            .range(domainRange.range);
+        // Color scheme
+        var color = this.colors;
+        // Selecting Sankey element from HTML
+        var svg = d3__WEBPACK_IMPORTED_MODULE_4__["select"]("#sankey"), width = +svg.attr("width"), height = +svg.attr("height");
+        // Clearing previous graph
+        svg.selectAll("*").remove();
+        // Formatting numbers in Sankey
+        var formatNumber = d3__WEBPACK_IMPORTED_MODULE_4__["format"](",.0f"), format = function (d) { return formatNumber(d); }; // (Optional) to add functionality of units: + " TWh"; },
+        // Initializing Sankey variable
+        var sankey = d3_sankey__WEBPACK_IMPORTED_MODULE_5__["sankey"]()
+            .nodeWidth(15)
+            .nodePadding(10)
+            .extent([[1, 1], [width - 1, height - 6]]);
+        var link = svg.append("g")
+            .attr("class", "links")
+            .attr("fill", "none")
+            .attr("stroke-opacity", 0.2)
+            .selectAll("path");
+        var node = svg.append("g")
+            .attr("class", "nodes")
+            .attr("font-family", "sans-serif")
+            .attr("font-size", 18)
+            .selectAll("g");
+        // Initializing graph (data container)
+        var graph = { "nodes": [], "links": [] };
+        var sankeyData = d3__WEBPACK_IMPORTED_MODULE_4__["csvParse"](this.message);
+        sankeyData.forEach(function (d) {
+            graph.nodes.push({ "name": d.source });
+            graph.nodes.push({ "name": d.target });
+            graph.links.push({ "source": d.source,
+                "target": d.target,
+                "value": +d.value });
+        });
+        graph.nodes = d3__WEBPACK_IMPORTED_MODULE_4__["map"](graph.nodes, function (d) { return d.name; }).keys();
+        graph.links.forEach(function (d, i) {
+            graph.links[i].source = graph.nodes.indexOf(graph.links[i].source);
+            graph.links[i].target = graph.nodes.indexOf(graph.links[i].target);
+        });
+        graph.nodes.forEach(function (d, i) {
+            graph.nodes[i] = { "name": d };
+        });
+        // append a defs (for definition) element to your SVG
+        var defs = svg.append('defs');
+        sankey(graph);
+        link = link
+            .data(graph.links)
+            .enter().append("path")
+            .attr("d", d3_sankey__WEBPACK_IMPORTED_MODULE_5__["sankeyLinkHorizontal"]())
+            .attr("stroke-width", function (d) { return Math.max(1, d.width); });
+        link.append("title")
+            .text(function (d) { return d.source.name + " → " + d.target.name + "\n" + format(d.value); });
+        node = node
+            .data(graph.nodes)
+            .enter().append("g");
+        node.append("rect")
+            .attr("x", function (d) { return d.x0; })
+            .attr("y", function (d) { return d.y0; })
+            .attr("height", function (d) { return d.y1 - d.y0; })
+            .attr("width", function (d) { return d.x1 - d.x0; })
+            // @ts-ignore
+            .attr("fill", function (d) {
+            if (color.domain().indexOf(d.name) > -1) {
+                return d.color = color(d.name);
+            }
+            else {
+                return d.color = getRandomColor();
+            }
+        });
+        node.append("text")
+            .attr("x", function (d) { return d.x0 - 6; })
+            .attr("y", function (d) { return (d.y1 + d.y0) / 2; })
+            .attr("dy", "0.35em")
+            .attr("text-anchor", "end")
+            .text(function (d) { return d.name + " [" + format(d.value) + ']'; })
+            .filter(function (d) { return d.x0 < width / 2; })
+            .attr("x", function (d) { return d.x1 + 6; })
+            .attr("text-anchor", "start");
+        node.append("title")
+            .text(function (d) { return d.name + "\n" + format(d.value); });
+        // add gradient to links
+        link.style('stroke', function (d, i) {
+            // make unique gradient ids  
+            var gradientID = "gradient" + i;
+            // @ts-ignore
+            var startColor = d.source.color;
+            // @ts-ignore
+            var stopColor = d.target.color;
+            var linearGradient = defs.append('linearGradient')
+                .attr('gradientUnits', 'userSpaceOnUse')
+                .attr('id', gradientID);
+            linearGradient.selectAll('stop')
+                .data([
+                { offset: '10%', color: startColor },
+                { offset: '90%', color: stopColor }
+            ])
+                .enter().append('stop')
+                .attr('offset', function (d) {
+                return d.offset;
+            })
+                .attr('stop-color', function (d) {
+                return d.color;
+            });
+            return "url(#" + gradientID + ")";
+        });
+        // Utility functions
+        // Method to generate random color
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    };
+    // QuickSave
+    // Press CTRL + SHIFT + S to save
+    VisualGenerateComponent.prototype.quickSave = function () {
+        save_svg_as_png__WEBPACK_IMPORTED_MODULE_6___default.a.saveSvgAsPng(d3__WEBPACK_IMPORTED_MODULE_4__["select"]('svg').node(), 'save.png', { backgroundColor: '#FFFFFF', encoderOptions: 1 });
+    };
+    // Saving functions
+    VisualGenerateComponent.prototype.getImgUrl = function () {
+        return "https://desktopluxury.com/";
+    };
+    // Save URI of Sankey image to cloud
+    VisualGenerateComponent.prototype.getUri = function () {
+        var imgUri;
+        save_svg_as_png__WEBPACK_IMPORTED_MODULE_6___default.a.svgAsDataUri(d3__WEBPACK_IMPORTED_MODULE_4__["select"]('svg').node(), {}, function (uri) {
+            imgUri = uri.toString();
+        });
+        return imgUri;
+    };
+    // Submitting data to database
+    VisualGenerateComponent.prototype._uploadVisualization = function () {
+        console.log("request made");
+        var visualData = new _dbase_server_visualization_model__WEBPACK_IMPORTED_MODULE_8__["VisualizationModel"]('Test', this.getUri(), this.getImgUrl(), new Date(), 'google-oauth2|111260364297332924329');
+        console.log(visualData);
+        // this.api.postVisual$(visualData)
+        //   .subscribe(
+        //     data => console.log(data),
+        //     err => console.log(err)
+        //   );
+    };
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["HostListener"])('document:keyup', ['$event']),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Function),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [KeyboardEvent]),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:returntype", void 0)
+    ], VisualGenerateComponent.prototype, "handleKeyboardEvent", null);
+    VisualGenerateComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-visual-generate',
+            template: __webpack_require__(/*! ./visual-generate.component.html */ "./src/app/core/consume/visual-generate/visual-generate.component.html"),
+            styles: [__webpack_require__(/*! ./visual-generate.component.scss */ "./src/app/core/consume/visual-generate/visual-generate.component.scss")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_visualize_data_driver_service__WEBPACK_IMPORTED_MODULE_3__["DataDriverService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"],
+            _api_service__WEBPACK_IMPORTED_MODULE_7__["ApiService"],
+            _auth_auth_serv_service__WEBPACK_IMPORTED_MODULE_9__["AuthServService"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_10__["HttpClient"]])
+    ], VisualGenerateComponent);
+    return VisualGenerateComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/core/dbase/server/visualization.model.ts":
 /*!**********************************************************!*\
   !*** ./src/app/core/dbase/server/visualization.model.ts ***!
@@ -621,13 +933,12 @@ var ApiService = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VisualizationModel", function() { return VisualizationModel; });
 var VisualizationModel = /** @class */ (function () {
-    function VisualizationModel(title, uri, imgUrl, createDate, userId, _id) {
+    function VisualizationModel(title, uri, imgUrl, createDate, userId) {
         this.title = title;
         this.uri = uri;
         this.imgUrl = imgUrl;
         this.createDate = createDate;
         this.userId = userId;
-        this._id = _id;
     }
     return VisualizationModel;
 }());
@@ -757,7 +1068,7 @@ var ChartComponent = /** @class */ (function () {
     };
     // Quick save function
     ChartComponent.prototype.quickSave = function () {
-        save_svg_as_png__WEBPACK_IMPORTED_MODULE_4___default.a.saveSvgAsPng(d3__WEBPACK_IMPORTED_MODULE_5__["select"]('svg').node(), 'save.png', { backgroundColor: '#FFFFFF' });
+        save_svg_as_png__WEBPACK_IMPORTED_MODULE_4___default.a.saveSvgAsPng(d3__WEBPACK_IMPORTED_MODULE_5__["select"]('svg').node(), 'save.png', { backgroundColor: '#FFFFFF', encoderOptions: 1, scale: 2 });
     };
     // Save URI of Sankey image to cloud
     ChartComponent.prototype.saveToCloud = function () {
@@ -1001,7 +1312,7 @@ var DataDriverService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n        <svg id=\"sankey\" height=\"300\" width=\"350\"></svg>\n</div>\n"
+module.exports = "<div>\n        <svg id=\"sankey\" height=\"270\" width=\"450\"></svg>\n</div>\n"
 
 /***/ }),
 
@@ -1140,7 +1451,7 @@ module.exports = "\n<div>\n  <app-sidebar></app-sidebar>\n  <app-prevchart></app
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "aside {\n  grid-area: sidebar; }\n\naside {\n  grid-area: chart; }\n\ndiv {\n  display: grid;\n  grid-template-columns: repeat(10, 1fr);\n  grid-gap: 5px; }\n\napp-sidebar {\n  grid-column: 1;\n  grid-row: 1;\n  margin: 0;\n  padding: 0; }\n\napp-chart {\n  grid-column-start: 2;\n  grid-column-end: 9;\n  grid-row: 1; }\n\napp-prevchart {\n  background-color: rgba(224, 218, 218, 0.4);\n  height: 360px;\n  width: 410px; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ydW4vbWVkaWEva2FhbGkvTkVXIFZPTFVNRS9QYXljaGV4L0RSSVMvc3JjL2FwcC9jb3JlL3Zpc3VhbGl6ZS90ZW1wbGF0ZS90ZW1wbGF0ZS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFHQTtFQUFRLGtCQUFrQixFQUFBOztBQUMxQjtFQUFRLGdCQUFnQixFQUFBOztBQUV4QjtFQUNJLGFBQWE7RUFHYixzQ0FBc0M7RUFDdEMsYUFBYSxFQUFBOztBQUdqQjtFQUNJLGNBQWM7RUFDZCxXQUFXO0VBRVgsU0FBUztFQUNULFVBQVUsRUFBQTs7QUFHZDtFQUNJLG9CQUFvQjtFQUNwQixrQkFBa0I7RUFDbEIsV0FBVyxFQUFBOztBQUdmO0VBQ0ksMENBQTBDO0VBQzFDLGFBQWE7RUFDYixZQUNKLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9jb3JlL3Zpc3VhbGl6ZS90ZW1wbGF0ZS90ZW1wbGF0ZS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIlxuLy8gU2lkZWJhciBjb250cm9sXG5cbmFzaWRlIHsgZ3JpZC1hcmVhOiBzaWRlYmFyOyB9XG5hc2lkZSB7IGdyaWQtYXJlYTogY2hhcnQ7IH1cblxuZGl2IHtcbiAgICBkaXNwbGF5OiBncmlkO1xuICAgIC8vZ3JpZC10ZW1wbGF0ZS1hcmVhczpcbiAgICAvLyAgICAnYXBwLXNpZGViYXIgYXBwLXNpZGViYXIgYXBwLWNoYXJ0IGFwcC1jaGFydCBhcHAtY2hhcnQnO1xuICAgIGdyaWQtdGVtcGxhdGUtY29sdW1uczogcmVwZWF0KDEwLCAxZnIpO1xuICAgIGdyaWQtZ2FwOiA1cHg7XG59XG5cbmFwcC1zaWRlYmFyIHtcbiAgICBncmlkLWNvbHVtbjogMTtcbiAgICBncmlkLXJvdzogMTtcblxuICAgIG1hcmdpbjogMDtcbiAgICBwYWRkaW5nOiAwO1xufVxuXG5hcHAtY2hhcnQge1xuICAgIGdyaWQtY29sdW1uLXN0YXJ0OiAyO1xuICAgIGdyaWQtY29sdW1uLWVuZDogOTtcbiAgICBncmlkLXJvdzogMTtcbn1cblxuYXBwLXByZXZjaGFydCB7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogcmdiYSgyMjQsIDIxOCwgMjE4LCAwLjQpO1xuICAgIGhlaWdodDogMzYwcHg7XG4gICAgd2lkdGg6IDQxMHB4XG59XG5cblxuIl19 */"
+module.exports = "aside {\n  grid-area: sidebar; }\n\naside {\n  grid-area: chart; }\n\ndiv {\n  display: grid;\n  grid-template-columns: repeat(10, 1fr);\n  grid-gap: 5px; }\n\napp-sidebar {\n  grid-column: 1;\n  grid-row: 1;\n  margin: 0;\n  padding: 0; }\n\napp-chart {\n  grid-column-start: 2;\n  grid-column-end: 9;\n  grid-row: 1; }\n\napp-prevchart {\n  background-color: rgba(224, 218, 218, 0.4);\n  height: 360px;\n  width: 460px; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ydW4vbWVkaWEva2FhbGkvTkVXIFZPTFVNRS9QYXljaGV4L0RSSVMvc3JjL2FwcC9jb3JlL3Zpc3VhbGl6ZS90ZW1wbGF0ZS90ZW1wbGF0ZS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFHQTtFQUFRLGtCQUFrQixFQUFBOztBQUMxQjtFQUFRLGdCQUFnQixFQUFBOztBQUV4QjtFQUNJLGFBQWE7RUFHYixzQ0FBc0M7RUFDdEMsYUFBYSxFQUFBOztBQUdqQjtFQUNJLGNBQWM7RUFDZCxXQUFXO0VBRVgsU0FBUztFQUNULFVBQVUsRUFBQTs7QUFHZDtFQUNJLG9CQUFvQjtFQUNwQixrQkFBa0I7RUFDbEIsV0FBVyxFQUFBOztBQUdmO0VBQ0ksMENBQTBDO0VBQzFDLGFBQWE7RUFDYixZQUNKLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9jb3JlL3Zpc3VhbGl6ZS90ZW1wbGF0ZS90ZW1wbGF0ZS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIlxuLy8gU2lkZWJhciBjb250cm9sXG5cbmFzaWRlIHsgZ3JpZC1hcmVhOiBzaWRlYmFyOyB9XG5hc2lkZSB7IGdyaWQtYXJlYTogY2hhcnQ7IH1cblxuZGl2IHtcbiAgICBkaXNwbGF5OiBncmlkO1xuICAgIC8vZ3JpZC10ZW1wbGF0ZS1hcmVhczpcbiAgICAvLyAgICAnYXBwLXNpZGViYXIgYXBwLXNpZGViYXIgYXBwLWNoYXJ0IGFwcC1jaGFydCBhcHAtY2hhcnQnO1xuICAgIGdyaWQtdGVtcGxhdGUtY29sdW1uczogcmVwZWF0KDEwLCAxZnIpO1xuICAgIGdyaWQtZ2FwOiA1cHg7XG59XG5cbmFwcC1zaWRlYmFyIHtcbiAgICBncmlkLWNvbHVtbjogMTtcbiAgICBncmlkLXJvdzogMTtcblxuICAgIG1hcmdpbjogMDtcbiAgICBwYWRkaW5nOiAwO1xufVxuXG5hcHAtY2hhcnQge1xuICAgIGdyaWQtY29sdW1uLXN0YXJ0OiAyO1xuICAgIGdyaWQtY29sdW1uLWVuZDogOTtcbiAgICBncmlkLXJvdzogMTtcbn1cblxuYXBwLXByZXZjaGFydCB7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogcmdiYSgyMjQsIDIxOCwgMjE4LCAwLjQpO1xuICAgIGhlaWdodDogMzYwcHg7XG4gICAgd2lkdGg6IDQ2MHB4XG59XG5cblxuIl19 */"
 
 /***/ }),
 
@@ -1184,7 +1495,7 @@ var TemplateComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<!--\n  This file contains (website-address.tdl/new):\n    1. Visualized Sankey\n-->\n<div>\n  <p id=\"error\">{{redirectErr}}</p>\n  <app-sidebar></app-sidebar>\n  <div class=\"container\">\n    <svg #downloadSankey id=\"sankey\" width=\"800\" height=\"600\" style=\"background-color: white;\"></svg>\n  </div>\n  <button id=\"saveButton\" (click)=\"saveSvg(downloadSankey,'test.jpg')\" >Save Chart</button>\n  <button  (click)=\"_uploadVisualization()\" >Upload Chart</button>\n</div>\n\n"
+module.exports = "\n<!--\n  This file contains (website-address.tdl/new):\n    1. Visualized Sankey\n-->\n<div>\n  <p id=\"error\">{{redirectErr}}</p>\n  <app-sidebar></app-sidebar>\n  <div class=\"container\">\n    <svg #downloadSankey id=\"sankey\" width=\"800\" height=\"600\" style=\"background-color: white;\"></svg>\n  </div>\n  <button id=\"saveButton\" (click)=\"saveSvg(downloadSankey,'test.jpg')\" style=\"height:20px\">Save Chart</button>\n  <button  (click)=\"_uploadVisualization()\" style=\"height:20px\">Upload Chart</button>\n</div>\n\n"
 
 /***/ }),
 
@@ -1221,6 +1532,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_dbase_server_visualization_model__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./../../core/dbase/server/visualization.model */ "./src/app/core/dbase/server/visualization.model.ts");
 /* harmony import */ var _auth_auth_serv_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./../auth/auth-serv.service */ "./src/app/core/auth/auth-serv.service.ts");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_fire_storage__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/fire/storage */ "./node_modules/@angular/fire/storage/index.js");
 
 
 
@@ -1233,19 +1545,32 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+// Storage
+
 var VisualizeComponent = /** @class */ (function () {
-    function VisualizeComponent(receivedData, router, api, auth, http) {
+    function VisualizeComponent(receivedData, router, api, auth, http, storage) {
         this.receivedData = receivedData;
         this.router = router;
         this.api = api;
         this.auth = auth;
         this.http = http;
+        this.storage = storage;
         this.colors = d3__WEBPACK_IMPORTED_MODULE_4__["scaleOrdinal"]()
             .domain([])
             .range([]);
         this.width = 1200;
         this.height = 600;
     }
+    // Key handler for shortcuts
+    VisualizeComponent.prototype.handleKeyboardEvent = function (event) {
+        if (event.ctrlKey && event.shiftKey && event.keyCode == 83) {
+            this.quickSave();
+        }
+        // @ts-ignore
+        if (event.ctrlKey && (event.keyCode == 18) && event.keyCode == 83) {
+            // TODO: Save to cloud
+        }
+    };
     VisualizeComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.receivedData.currentMessage.subscribe(function (message) { return _this.message = message; });
@@ -1259,7 +1584,12 @@ var VisualizeComponent = /** @class */ (function () {
             return;
         }
         this.drawChart();
-        this._uploadVisualization();
+        // Initialize firebase
+        // TODO Delete
+        var file = this.getUri().then(function (data) { return data; });
+        console.log(file);
+        var ref = this.storage.ref('images');
+        ref.putString(file);
     };
     // Save chart
     VisualizeComponent.prototype.saveSvg = function (diagram, name) {
@@ -1401,25 +1731,37 @@ var VisualizeComponent = /** @class */ (function () {
             return color;
         }
     };
+    // QuickSave
+    // Press CTRL + SHIFT + S to save
+    VisualizeComponent.prototype.quickSave = function () {
+        save_svg_as_png__WEBPACK_IMPORTED_MODULE_6___default.a.saveSvgAsPng(d3__WEBPACK_IMPORTED_MODULE_4__["select"]('svg').node(), 'save.png', { backgroundColor: '#FFFFFF', encoderOptions: 1 });
+    };
     // Saving functions
     VisualizeComponent.prototype.getImgUrl = function () {
         return "https://desktopluxury.com/";
     };
     // Save URI of Sankey image to cloud
     VisualizeComponent.prototype.getUri = function () {
-        var imgUri;
-        save_svg_as_png__WEBPACK_IMPORTED_MODULE_6___default.a.svgAsDataUri(d3__WEBPACK_IMPORTED_MODULE_4__["select"]('svg').node(), {}, function (uri) {
-            imgUri = uri;
+        return save_svg_as_png__WEBPACK_IMPORTED_MODULE_6___default.a.svgAsDataUri(d3__WEBPACK_IMPORTED_MODULE_4__["select"]('svg').node(), {}, function (uri) {
+            return uri;
         });
-        return "TestURI";
+    };
+    // Storage handling
+    VisualizeComponent.prototype._makeStorageConnection = function () {
     };
     // Submitting data to database
     VisualizeComponent.prototype._uploadVisualization = function () {
-        console.log("request made");
-        var visualData = new _core_dbase_server_visualization_model__WEBPACK_IMPORTED_MODULE_8__["VisualizationModel"]('Test', this.getUri(), this.getImgUrl(), new Date(), 'google-oauth2|111260364297332924329');
+        var visualData = new _core_dbase_server_visualization_model__WEBPACK_IMPORTED_MODULE_8__["VisualizationModel"]('Test', this.getUri().then((function (val) { console.log(val); })), this.getImgUrl(), new Date(), 'google-oauth2|111260364297332924329');
+        console.log(visualData);
         this.api.postVisual$(visualData)
             .subscribe(function (data) { return console.log(data); }, function (err) { return console.log(err); });
     };
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["HostListener"])('document:keyup', ['$event']),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Function),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [KeyboardEvent]),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:returntype", void 0)
+    ], VisualizeComponent.prototype, "handleKeyboardEvent", null);
     VisualizeComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-visualize',
@@ -1430,7 +1772,8 @@ var VisualizeComponent = /** @class */ (function () {
             _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"],
             _core_consume_api_service__WEBPACK_IMPORTED_MODULE_7__["ApiService"],
             _auth_auth_serv_service__WEBPACK_IMPORTED_MODULE_9__["AuthServService"],
-            _angular_common_http__WEBPACK_IMPORTED_MODULE_10__["HttpClient"]])
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_10__["HttpClient"],
+            _angular_fire_storage__WEBPACK_IMPORTED_MODULE_11__["AngularFireStorage"]])
     ], VisualizeComponent);
     return VisualizeComponent;
 }());
@@ -1618,7 +1961,7 @@ var ContactComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n  This file contains:\n  1. Menubar\n  2. Homepage top section\n-->\n\n<!-- Menubar starts -->\n<app-nav></app-nav>\n\n<!-- Homepage top section starts -->\n<div class=\"home-section\">\n  <h1>Welcome to DRIS</h1>\n  <p>DRIS, <em>or Drawing Really Interesting Sankey</em>, lets you create powerful Sankey visualizations for every need!</p>\n  <button routerLink=\"/new\">Visualize Now</button>\n</div>\n<!-- Homepage top section ends -->\n"
+module.exports = "<!--\n  This file contains:\n  1. Menubar\n  2. Homepage top section\n-->\n\n<!-- Menubar starts -->\n<app-nav></app-nav>\n\n<!-- Homepage top section starts -->\n<div class=\"home-section\">\n  <h1>Welcome to DRIS</h1>\n  <p>DRIS, <em>or Drawing Really Interesting Sankey</em>, lets you create powerful Sankey visualizations for every need!</p>\n  <button routerLink=\"/new\">Visualize Now</button>\n</div>\n<div class=\"example-section\">\n  <svg _ngcontent-naj-c7=\"\" height=\"400\" id=\"canvas\" style=\"margin: auto auto;\" width=\"90%\"><g class=\"links\" fill=\"none\" stroke-opacity=\"0.2\"><path d=\"M16,169.75254090635508C204.25,169.75254090635508,204.25,181.1612272770926,392.5,181.1612272770926\" stroke-width=\"163.71428571428572\" style=\"stroke: url(&quot;#gradient0&quot;);\"><title>CollegePCs → Windows\n  200</title></path><path d=\"M16,430.0667824248723C204.25,430.0667824248723,204.25,426.7326558485212,392.5,426.7326558485212\" stroke-width=\"327.42857142857144\" style=\"stroke: url(&quot;#gradient1&quot;);\"><title>SchoolPCs → Windows\n  400</title></path><path d=\"M16,46.96682662064079C400,46.96682662064079,400,41.92857142857131,784,41.92857142857131\" stroke-width=\"81.85714285714286\" style=\"stroke: url(&quot;#gradient2&quot;);\"><title>CollegePCs → Mac\n  100</title></path><path d=\"M407.5,242.55408441994973C595.75,242.55408441994973,595.75,236.10714285714275,784,236.10714285714275\" stroke-width=\"286.5\" style=\"stroke: url(&quot;#gradient3&quot;);\"><title>Windows → Windows10\n  350</title></path><path d=\"M407.5,488.1255129913783C595.75,488.1255129913783,595.75,491.67857142857133,784,491.67857142857133\" stroke-width=\"204.64285714285717\" style=\"stroke: url(&quot;#gradient4&quot;);\"><title>Windows → Linux\n  250</title></path></g><g class=\"nodes\" font-family=\"sans-serif\" font-size=\"18\"><g><rect x=\"1\" y=\"6.038255192069354\" height=\"245.5714285714286\" width=\"15\" fill=\"#BD4512\"></rect><text x=\"22\" y=\"128.82396947778366\" dy=\"0.35em\" text-anchor=\"start\">CollegePCs [300]</text><title>CollegePCs\n  300</title></g><g><rect x=\"392.5\" y=\"99.30408441994973\" height=\"491.1428571428571\" width=\"15\" fill=\"#35F956\"></rect><text x=\"413.5\" y=\"344.8755129913783\" dy=\"0.35em\" text-anchor=\"start\">Windows [600]</text><title>Windows\n  600</title></g><g><rect x=\"1\" y=\"266.3524967105866\" height=\"327.42857142857144\" width=\"15\" fill=\"#AEA59A\"></rect><text x=\"22\" y=\"430.0667824248723\" dy=\"0.35em\" text-anchor=\"start\">SchoolPCs [400]</text><title>SchoolPCs\n  400</title></g><g><rect x=\"784\" y=\"0.9999999999998779\" height=\"81.85714285714288\" width=\"15\" fill=\"#876507\"></rect><text x=\"778\" y=\"41.92857142857131\" dy=\"0.35em\" text-anchor=\"end\">Mac [100]</text><title>Mac\n  100</title></g><g><rect x=\"784\" y=\"92.85714285714275\" height=\"286.5\" width=\"15\" fill=\"#222538\"></rect><text x=\"778\" y=\"236.10714285714278\" dy=\"0.35em\" text-anchor=\"end\">Windows10 [350]</text><title>Windows10\n  350</title></g><g><rect x=\"784\" y=\"389.3571428571428\" height=\"204.64285714285722\" width=\"15\" fill=\"#5478A4\"></rect><text x=\"778\" y=\"491.6785714285714\" dy=\"0.35em\" text-anchor=\"end\">Linux [250]</text><title>Linux\n  250</title></g></g><defs><linearGradient gradientUnits=\"userSpaceOnUse\" id=\"gradient0\"><stop offset=\"10%\" stop-color=\"#BD4512\"></stop><stop offset=\"90%\" stop-color=\"#35F956\"></stop></linearGradient><linearGradient gradientUnits=\"userSpaceOnUse\" id=\"gradient1\"><stop offset=\"10%\" stop-color=\"#AEA59A\"></stop><stop offset=\"90%\" stop-color=\"#35F956\"></stop></linearGradient><linearGradient gradientUnits=\"userSpaceOnUse\" id=\"gradient2\"><stop offset=\"10%\" stop-color=\"#BD4512\"></stop><stop offset=\"90%\" stop-color=\"#876507\"></stop></linearGradient><linearGradient gradientUnits=\"userSpaceOnUse\" id=\"gradient3\"><stop offset=\"10%\" stop-color=\"#35F956\"></stop><stop offset=\"90%\" stop-color=\"#222538\"></stop></linearGradient><linearGradient gradientUnits=\"userSpaceOnUse\" id=\"gradient4\"><stop offset=\"10%\" stop-color=\"#35F956\"></stop><stop offset=\"90%\" stop-color=\"#5478A4\"></stop></linearGradient></defs></svg>\n\n  <div>\n      <h2>Draw Sankey</h2>\n    </div>\n</div>\n\n<!-- Homepage top section ends -->\n"
 
 /***/ }),
 
@@ -1629,7 +1972,7 @@ module.exports = "<!--\n  This file contains:\n  1. Menubar\n  2. Homepage top s
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".home-section {\n  height: 40%;\n  width: 100%;\n  text-align: center;\n  background-color: rgba(255, 255, 255, 0.3);\n  padding-top: 5vh; }\n  .home-section h1 {\n    margin: 0; }\n  button {\n  background: #65e98c;\n  color: #fff;\n  border: none;\n  position: relative;\n  height: 60px;\n  font-size: 1.6em;\n  padding: 0 2em;\n  margin-top: 20px;\n  cursor: pointer;\n  transition: 800ms ease all;\n  outline: none; }\n  button:hover {\n    background: rgba(255, 245, 245, 0.8);\n    color: #65e98c; }\n  button:before, button:after {\n    content: '';\n    position: absolute;\n    top: 0;\n    right: 0;\n    height: 2px;\n    width: 0;\n    background: #65e98c;\n    transition: 400ms ease all; }\n  button:after {\n    right: inherit;\n    top: inherit;\n    left: 0;\n    bottom: 0; }\n  button:hover:before, button:hover:after {\n    width: 100%;\n    transition: 800ms ease all; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ydW4vbWVkaWEva2FhbGkvTkVXIFZPTFVNRS9QYXljaGV4L0RSSVMvc3JjL2FwcC9wYWdlcy9ob21lL2hvbWUuY29tcG9uZW50LnNjc3MiLCIvcnVuL21lZGlhL2thYWxpL05FVyBWT0xVTUUvUGF5Y2hleC9EUklTL3NyYy9tYXN0ZXJWYXJpYWJsZXMuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFLQTtFQUNJLFdBQVc7RUFDWCxXQUFXO0VBQ1gsa0JBQWtCO0VBQ2xCLDBDQUEwQztFQUMxQyxnQkFBZ0IsRUFBQTtFQUxwQjtJQVNRLFNBQVMsRUFBQTtFQUtqQjtFQUNJLG1CQ25CNEI7RURvQjVCLFdBQVU7RUFDVixZQUFXO0VBQ1gsa0JBQWlCO0VBQ2pCLFlBQVc7RUFDWCxnQkFBZTtFQUNmLGNBQWE7RUFDYixnQkFBZ0I7RUFDaEIsZUFBYztFQUNkLDBCQUF5QjtFQUN6QixhQUFZLEVBQUE7RUFYaEI7SUFjUSxvQ0FBbUM7SUFDbkMsY0NqQ3dCLEVBQUE7RURrQmhDO0lBa0JRLFdBQVU7SUFDVixrQkFBaUI7SUFDakIsTUFBSztJQUNMLFFBQU87SUFDUCxXQUFVO0lBQ1YsUUFBTztJQUNQLG1CQzFDd0I7SUQyQ3hCLDBCQUF5QixFQUFBO0VBekJqQztJQTRCUSxjQUFhO0lBQ2IsWUFBVztJQUNYLE9BQU07SUFDTixTQUFRLEVBQUE7RUEvQmhCO0lBa0NRLFdBQVU7SUFDViwwQkFBeUIsRUFBQSIsImZpbGUiOiJzcmMvYXBwL3BhZ2VzL2hvbWUvaG9tZS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIlxuLy8gSW1wb3J0aW5nIGdsb2JhbCB2YXJpYWJsZXNcbkBpbXBvcnQgXCIuLi8uLi8uLi9tYXN0ZXJWYXJpYWJsZXMuc2Nzc1wiO1xuXG4vLyBIb21lIHNlY3Rpb25cbi5ob21lLXNlY3Rpb24ge1xuICAgIGhlaWdodDogNDAlO1xuICAgIHdpZHRoOiAxMDAlO1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMyk7XG4gICAgcGFkZGluZy10b3A6IDV2aDtcblxuICAgIC8vIFRvcCBoZWFkaW5nXG4gICAgaDEge1xuICAgICAgICBtYXJnaW46IDA7XG4gICAgfVxufVxuXG4vLyBEZXNpZ25pbmcgdGhlIGJ1dHRvblxuYnV0dG9ue1xuICAgIGJhY2tncm91bmQ6JG1hc3RlckNvbG9yO1xuICAgIGNvbG9yOiNmZmY7XG4gICAgYm9yZGVyOm5vbmU7XG4gICAgcG9zaXRpb246cmVsYXRpdmU7XG4gICAgaGVpZ2h0OjYwcHg7XG4gICAgZm9udC1zaXplOjEuNmVtO1xuICAgIHBhZGRpbmc6MCAyZW07XG4gICAgbWFyZ2luLXRvcDogMjBweDtcbiAgICBjdXJzb3I6cG9pbnRlcjtcbiAgICB0cmFuc2l0aW9uOjgwMG1zIGVhc2UgYWxsO1xuICAgIG91dGxpbmU6bm9uZTtcblxuICAgICY6aG92ZXJ7XG4gICAgICAgIGJhY2tncm91bmQ6cmdiYSgyNTUsIDI0NSwgMjQ1LCAwLjgpOztcbiAgICAgICAgY29sb3I6JG1hc3RlckNvbG9yO1xuICAgIH1cbiAgICAmOmJlZm9yZSwmOmFmdGVye1xuICAgICAgICBjb250ZW50OicnO1xuICAgICAgICBwb3NpdGlvbjphYnNvbHV0ZTtcbiAgICAgICAgdG9wOjA7XG4gICAgICAgIHJpZ2h0OjA7XG4gICAgICAgIGhlaWdodDoycHg7XG4gICAgICAgIHdpZHRoOjA7XG4gICAgICAgIGJhY2tncm91bmQ6ICRtYXN0ZXJDb2xvcjtcbiAgICAgICAgdHJhbnNpdGlvbjo0MDBtcyBlYXNlIGFsbDtcbiAgICB9XG4gICAgJjphZnRlcntcbiAgICAgICAgcmlnaHQ6aW5oZXJpdDtcbiAgICAgICAgdG9wOmluaGVyaXQ7XG4gICAgICAgIGxlZnQ6MDtcbiAgICAgICAgYm90dG9tOjA7XG4gICAgfVxuICAgICY6aG92ZXI6YmVmb3JlLCY6aG92ZXI6YWZ0ZXJ7XG4gICAgICAgIHdpZHRoOjEwMCU7XG4gICAgICAgIHRyYW5zaXRpb246ODAwbXMgZWFzZSBhbGw7XG4gICAgfVxufVxuICAiLCIvLyBNYXN0ZXIgY29sb3JzIGhlcmVcbiRtYXN0ZXJDb2xvcjogcmdiKDEwMSwgMjMzLCAxNDApO1xuJGJhY2tncm91bmRJbWc6IFwiLi9iYWNrZ3JvdW5kLnBuZ1wiO1xuIl19 */"
+module.exports = ".home-section {\n  height: 38%;\n  width: 100%;\n  text-align: center;\n  background-color: rgba(255, 255, 255, 0.3);\n  padding-top: 2vh; }\n  .home-section h1 {\n    margin: 0; }\n  .example-section {\n  height: 47%;\n  width: 100%;\n  padding: 1em;\n  margin-top: 0;\n  margin: auto auto;\n  text-align: center;\n  background-color: rgba(255, 255, 255, 0.3);\n  display: grid;\n  grid-column: svg;\n    grid-column-float: left; }\n  button {\n  background: #65e98c;\n  color: #fff;\n  border: none;\n  position: relative;\n  height: 60px;\n  font-size: 1.6em;\n  padding: 0 2em;\n  margin-top: 20px;\n  cursor: pointer;\n  transition: 800ms ease all;\n  outline: none; }\n  button:hover {\n    background: rgba(255, 245, 245, 0.8);\n    color: #65e98c; }\n  button:before, button:after {\n    content: '';\n    position: absolute;\n    top: 0;\n    right: 0;\n    height: 2px;\n    width: 0;\n    background: #65e98c;\n    transition: 400ms ease all; }\n  button:after {\n    right: inherit;\n    top: inherit;\n    left: 0;\n    bottom: 0; }\n  button:hover:before, button:hover:after {\n    width: 100%;\n    transition: 800ms ease all; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ydW4vbWVkaWEva2FhbGkvTkVXIFZPTFVNRS9QYXljaGV4L0RSSVMvc3JjL2FwcC9wYWdlcy9ob21lL2hvbWUuY29tcG9uZW50LnNjc3MiLCIvcnVuL21lZGlhL2thYWxpL05FVyBWT0xVTUUvUGF5Y2hleC9EUklTL3NyYy9tYXN0ZXJWYXJpYWJsZXMuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFLQTtFQUNJLFdBQVc7RUFDWCxXQUFXO0VBQ1gsa0JBQWtCO0VBQ2xCLDBDQUEwQztFQUMxQyxnQkFBZ0IsRUFBQTtFQUxwQjtJQVNRLFNBQVMsRUFBQTtFQUtqQjtFQUNJLFdBQVc7RUFDWCxXQUFXO0VBQ1gsWUFBWTtFQUNaLGFBQWE7RUFDYixpQkFBaUI7RUFDakIsa0JBQWtCO0VBQ2xCLDBDQUEwQztFQUMxQyxhQUFhO0VBQ2IsZ0JBRUc7SUFDQyx1QkFBVyxFQUFBO0VBU25CO0VBQ0ksbUJDeEM0QjtFRHlDNUIsV0FBVTtFQUNWLFlBQVc7RUFDWCxrQkFBaUI7RUFDakIsWUFBVztFQUNYLGdCQUFlO0VBQ2YsY0FBYTtFQUNiLGdCQUFnQjtFQUNoQixlQUFjO0VBQ2QsMEJBQXlCO0VBQ3pCLGFBQVksRUFBQTtFQVhoQjtJQWNRLG9DQUFtQztJQUNuQyxjQ3REd0IsRUFBQTtFRHVDaEM7SUFrQlEsV0FBVTtJQUNWLGtCQUFpQjtJQUNqQixNQUFLO0lBQ0wsUUFBTztJQUNQLFdBQVU7SUFDVixRQUFPO0lBQ1AsbUJDL0R3QjtJRGdFeEIsMEJBQXlCLEVBQUE7RUF6QmpDO0lBNEJRLGNBQWE7SUFDYixZQUFXO0lBQ1gsT0FBTTtJQUNOLFNBQVEsRUFBQTtFQS9CaEI7SUFrQ1EsV0FBVTtJQUNWLDBCQUF5QixFQUFBIiwiZmlsZSI6InNyYy9hcHAvcGFnZXMvaG9tZS9ob21lLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXG4vLyBJbXBvcnRpbmcgZ2xvYmFsIHZhcmlhYmxlc1xuQGltcG9ydCBcIi4uLy4uLy4uL21hc3RlclZhcmlhYmxlcy5zY3NzXCI7XG5cbi8vIEhvbWUgc2VjdGlvblxuLmhvbWUtc2VjdGlvbiB7XG4gICAgaGVpZ2h0OiAzOCU7XG4gICAgd2lkdGg6IDEwMCU7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIGJhY2tncm91bmQtY29sb3I6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4zKTtcbiAgICBwYWRkaW5nLXRvcDogMnZoO1xuXG4gICAgLy8gVG9wIGhlYWRpbmdcbiAgICBoMSB7XG4gICAgICAgIG1hcmdpbjogMDtcbiAgICB9XG59XG5cblxuLmV4YW1wbGUtc2VjdGlvbiB7XG4gICAgaGVpZ2h0OiA0NyU7XG4gICAgd2lkdGg6IDEwMCU7XG4gICAgcGFkZGluZzogMWVtO1xuICAgIG1hcmdpbi10b3A6IDA7XG4gICAgbWFyZ2luOiBhdXRvIGF1dG87XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIGJhY2tncm91bmQtY29sb3I6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4zKTtcbiAgICBkaXNwbGF5OiBncmlkO1xuICAgIGdyaWQtY29sdW1uOiBcblxuICAgIHN2ZyB7XG4gICAgICAgIGZsb2F0OiBsZWZ0O1xuICAgIH1cblxuICAgIGRpdiB7XG4gICAgICAgIFxuICAgIH1cbn1cblxuLy8gRGVzaWduaW5nIHRoZSBidXR0b25cbmJ1dHRvbntcbiAgICBiYWNrZ3JvdW5kOiRtYXN0ZXJDb2xvcjtcbiAgICBjb2xvcjojZmZmO1xuICAgIGJvcmRlcjpub25lO1xuICAgIHBvc2l0aW9uOnJlbGF0aXZlO1xuICAgIGhlaWdodDo2MHB4O1xuICAgIGZvbnQtc2l6ZToxLjZlbTtcbiAgICBwYWRkaW5nOjAgMmVtO1xuICAgIG1hcmdpbi10b3A6IDIwcHg7XG4gICAgY3Vyc29yOnBvaW50ZXI7XG4gICAgdHJhbnNpdGlvbjo4MDBtcyBlYXNlIGFsbDtcbiAgICBvdXRsaW5lOm5vbmU7XG5cbiAgICAmOmhvdmVye1xuICAgICAgICBiYWNrZ3JvdW5kOnJnYmEoMjU1LCAyNDUsIDI0NSwgMC44KTs7XG4gICAgICAgIGNvbG9yOiRtYXN0ZXJDb2xvcjtcbiAgICB9XG4gICAgJjpiZWZvcmUsJjphZnRlcntcbiAgICAgICAgY29udGVudDonJztcbiAgICAgICAgcG9zaXRpb246YWJzb2x1dGU7XG4gICAgICAgIHRvcDowO1xuICAgICAgICByaWdodDowO1xuICAgICAgICBoZWlnaHQ6MnB4O1xuICAgICAgICB3aWR0aDowO1xuICAgICAgICBiYWNrZ3JvdW5kOiAkbWFzdGVyQ29sb3I7XG4gICAgICAgIHRyYW5zaXRpb246NDAwbXMgZWFzZSBhbGw7XG4gICAgfVxuICAgICY6YWZ0ZXJ7XG4gICAgICAgIHJpZ2h0OmluaGVyaXQ7XG4gICAgICAgIHRvcDppbmhlcml0O1xuICAgICAgICBsZWZ0OjA7XG4gICAgICAgIGJvdHRvbTowO1xuICAgIH1cbiAgICAmOmhvdmVyOmJlZm9yZSwmOmhvdmVyOmFmdGVye1xuICAgICAgICB3aWR0aDoxMDAlO1xuICAgICAgICB0cmFuc2l0aW9uOjgwMG1zIGVhc2UgYWxsO1xuICAgIH1cbn1cbiAgIiwiLy8gTWFzdGVyIGNvbG9ycyBoZXJlXG4kbWFzdGVyQ29sb3I6IHJnYigxMDEsIDIzMywgMTQwKTtcbiRiYWNrZ3JvdW5kSW1nOiBcIi4vYmFja2dyb3VuZC5wbmdcIjtcbiJdfQ== */"
 
 /***/ }),
 
@@ -1651,9 +1994,10 @@ var HomeComponent = /** @class */ (function () {
     function HomeComponent() {
     }
     HomeComponent.prototype.ngOnInit = function () {
-    };
-    HomeComponent.prototype.firstClick = function () {
-        console.log('clicked');
+        // @ts-ignore
+        new Vivus('canvas', { start: 'autostart', type: 'delayed', duration: 150, animTimingFunction: Vivus.EASE }, function (car) {
+            setTimeout(function () { car.reset().play(); }, 3000);
+        });
     };
     HomeComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({

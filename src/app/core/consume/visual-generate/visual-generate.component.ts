@@ -288,6 +288,10 @@ export class VisualGenerateComponent implements OnInit {
   // Submitting data to database
   private _uploadVisualization() {
     console.log("request made");
+
+    const uri = this.getUri();
+    
+
     var visualData = new VisualizationModel(
       'Test',
       this.getUri(),

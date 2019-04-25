@@ -10,6 +10,7 @@ const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
 const Visualization = require('./schema');
 const bodyParser = require('body-parser');
+const config = require('./config.js');
 
 /*
  |--------------------------------------
@@ -82,11 +83,9 @@ module.exports = function(app, config) {
 
     // Get user visualizations
     app.get('/api/myvisual', jwtCheck, (req, res) => {
-      Event.find({}, (err, events) => {
+      Visualization.find({}, (err, events) => {
         let eventsArr = [];
-        if (err) {
-          return res.status(500).send({message: err.message});
-        }
+        if (err) { return res.status(500).send({message: err.message}); }
         if (events) {
           events.forEach(event => {
             eventsArr.push(event);

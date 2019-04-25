@@ -78,14 +78,6 @@ export class VisualizeComponent implements OnInit {
       return;
     }
     this.drawChart();
-
-    // Initialize firebase
-    // TODO Delete
-    
-
-    let file = this.getUri();
-    let ref = this.storage.ref('images');
-    ref.putString("HEJKHAKJSHDAS");
   }
 
   // Save chart
@@ -281,7 +273,7 @@ export class VisualizeComponent implements OnInit {
 
   // Save URI of Sankey image to cloud
   getUri() {
-    return saveSvgAsPng.svgAsDataUri(d3.select('svg').node(), {}, function(uri) {
+    return saveSvgAsPng.saveSvgAsPng(d3.select('svg').node(), {}, function(uri) {
       return uri;
     });
   }
@@ -299,10 +291,18 @@ export class VisualizeComponent implements OnInit {
 
   }
 
+
   // Submitting data to database
   private _uploadVisualization() {
+    console.log("UPloading");
+    const blob = this.getUri().then(val => {return val});
+    const url = URL.createObjectURL(blob);
 
-    
+    console.log(url);
+
+    let ref = this.storage.ref('/images' + "randomName");
+    ref.put(url);
+
 
     var visualData = new VisualizationModel(
       'Test',

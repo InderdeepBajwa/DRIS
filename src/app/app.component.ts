@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthServService } from './core/auth/auth-serv.service';
 import { fadeAnimation } from './route-animations';
-import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-root',
@@ -12,13 +10,9 @@ import { AngularFireStorage } from '@angular/fire/storage';
 export class AppComponent implements OnInit {
   title = 'DRIS';
 
-  constructor(public auth: AuthServService, storage: AngularFireStorage ) {
-    auth.handleAuth();
+  constructor() {
   }
 
   ngOnInit() {
-    if (this.auth.loggedIn) {
-      this.auth.renewToken();
-    }
   }
 }
