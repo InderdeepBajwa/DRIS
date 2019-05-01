@@ -272,51 +272,31 @@ export class VisualizeComponent implements OnInit {
   }
 
   // Save URI of Sankey image to cloud
-  getUri() {
-    return saveSvgAsPng.saveSvgAsPng(d3.select('svg').node(), {}, function(uri) {
-      return uri;
-    });
+  _uploadToCloud() {
+    let imgUrl: string;
+    if(this.auth.loggedIn) {
+      // TODO error
+      console.log("Please log in")
+    } else {
+      let ref = this.storage.ref('visuals').child('visual__' + new Date());
+      return saveSvgAsPng.svgAsPngUri(d3.select('svg').node(), {}, function(uri) {
+        let task = ref.putString(uri, 'data_url', { contentType: "image/png"}).then(snapshot => {
+          snapshot.ref.getDownloadURL()
+          return snapshot.ref.getDownloadURL();
+        }, err => {
+          console.log(err);
+        })
+      });
+    }
+  }
+
+  uploadToCloud() {
+    let url = this._uploadToCloud();
+
+    console.log(url)
   }
 
 
-  // Database and Auth handling here
-
-  VisualizationListSub: Subscription;
-  visualizationsList: VisualizationModel[];
-  error: boolean;
-
-
-  // Storage handling
-  _makeStorageConnection() {
-
-  }
-
-
-  // Submitting data to database
-  private _uploadVisualization() {
-    console.log("UPloading");
-    const img = this.getUri().then(val => {return val});
-    const blob = new Blob([img], { type: "image/png"});
-
-    
-    let ref = this.storage.ref('/images' + "randomName");
-    ref.put(blob);
-
-    var visualData = new VisualizationModel(
-      'Test',
-      this.getUri().then((val => { console.log(val)})),
-      this.getImgUrl(),
-      new Date(),
-      'google-oauth2|111260364297332924329'
-    );
-
-    console.log(visualData)
-
-    this.api.postVisual$(visualData)
-      .subscribe(
-        data => console.log(data),
-        err => console.log(err)
-    );
-  }
+ 
 
 }

@@ -10,8 +10,6 @@ const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
 const Visualization = require('./schema');
 const bodyParser = require('body-parser');
-const config = require('./config.js');
-
 /*
  |--------------------------------------
  | Authentication Middleware
@@ -97,8 +95,9 @@ module.exports = function(app, config) {
 
 
     // API for visualization-interactions
-    app.post('/api/create', bodyParser.text(), async (req, res) => {
-      await console.log(req.body);
+    app.post('/api/create', bodyParser.text(), (req, res) => {
+      const str = req.body;
+      conole.log(str);
       res.send('Ok');
     })
 }

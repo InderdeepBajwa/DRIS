@@ -87,8 +87,6 @@ export class AuthServService {
     // Update login status in loggedIn$ stream
     this.setLoggedIn(true);
     this.loggingIn = false;
-    // Schedule access token renewal
-    this.scheduleRenewal();
   }
 
   private _redirect() {
@@ -139,37 +137,4 @@ export class AuthServService {
       }
     });
   }
-
-  scheduleRenewal() {
-    // If last token is expired, do nothing
-    if (!this.tokenValid) { return; }
-    // Unsubscribe from previous expiration observable
-    this.unscheduleRenewal();
-    // Create and subscribe to expiration observable
-    const expiresIn$ = of(this.expiresAt).pipe(
-      mergeMap(
-        expires => {
-          const now = Date.now();
-          // Use timer to track delay until expiration
-          // to run the refresh at the proper time
-          return timer(Math.max(1, expires - now));
-        }
-      )
-    );
-
-    this.refreshSub = expiresIn$
-      .subscribe(
-        () => {
-          this.renewToken();
-          this.scheduleRenewal();
-        }
-      );
-  }
-
-  unscheduleRenewal() {
-    if (this.refreshSub) {
-      this.refreshSub.unsubscribe();
-    }
-  }
-
 }

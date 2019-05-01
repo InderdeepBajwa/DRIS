@@ -29,7 +29,7 @@ import { VisualGenerateComponent } from './core/consume/visual-generate/visual-g
 
 // Firebase
 import { AngularFireModule } from '@angular/fire';
-import { AngularFireStorage, AngularFireStorageModule, StorageBucket } from '@angular/fire/storage'
+import { AngularFireStorage, AngularFireStorageModule, StorageBucket } from '@angular/fire/storage';
 
 @NgModule({
   declarations: [

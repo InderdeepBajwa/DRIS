@@ -17,5 +17,9 @@ export class DataDriverService {
   changeMessage(message: string, color: string) {
     this.messageSource.next(message);
     this.colorSource.next(color);
+  }
+  changeMessageOnly(message: string, color: string) {
+    this.messageSource.next(message);
+    this.colorSource.next(color);
   } 
 }

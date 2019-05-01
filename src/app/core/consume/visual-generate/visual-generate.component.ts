@@ -14,7 +14,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { catchError } from 'rxjs/operators';
 
 // Storage
-
+import { AngularFireStorageModule, AngularFireStorage, StorageBucket } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-visual-generate',
@@ -57,23 +57,45 @@ export class VisualGenerateComponent implements OnInit {
     private router: Router,
     private api: ApiService,
     private auth: AuthServService,
-    private http: HttpClient
+    private http: HttpClient,
+    private storage: AngularFireStorage
   ) {}
 
   ngOnInit() {
     this.receivedData.currentMessage.subscribe(message => this.message = message);
     this.receivedData.currentColor.subscribe(color => this.color = color);
-    // Error checking for null value
-    if (this.message == "" || this.message == null || this.message == "default message") {
-      this.redirectErr = "No chart input data found. Redirecting to /new to create new data.";
-      setTimeout(() => {
-        this.router.navigate(['/new']);
-      }, 3000);
+    
 
-      return;
-    }
+
     this.drawChart();
+    this.uploadToCloud();
 
+
+  }
+
+  // Save URI of Sankey image to cloud
+  _uploadToCloud() {
+    let imgUrl: string;
+    if(this.auth.loggedIn) {
+      // TODO error
+      console.log("Please log in")
+    } else {
+      let ref = this.storage.ref('visuals').child('visual__' + new Date());
+      return saveSvgAsPng.svgAsPngUri(d3.select('svg').node(), {}, function(uri) {
+        let task = ref.putString(uri, 'data_url', { contentType: "image/png"}).then(snapshot => {
+          snapshot.ref.getDownloadURL()
+          return snapshot.ref.getDownloadURL();
+        }, err => {
+          console.log(err);
+        })
+      });
+    }
+  }
+
+  uploadToCloud() {
+    let url = this._uploadToCloud();
+
+    console.log(url)
   }
 
   // Save chart

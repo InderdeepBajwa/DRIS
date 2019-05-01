@@ -25,7 +25,7 @@ export class ChartComponent implements OnInit {
       this.quickSave();
     }
     if (event.ctrlKey && event.shiftKey && event.keyCode == 83) {
-
+      
     }
   }
 
